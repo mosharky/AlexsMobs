@@ -1,10 +1,7 @@
 package com.github.alexthe666.alexsmobs.entity;
 
 import com.github.alexthe666.alexsmobs.config.AMConfig;
-import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIHurtByTargetNotBaby;
-import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIPanicBaby;
-import com.github.alexthe666.alexsmobs.entity.ai.CreatureAITargetItems;
-import com.github.alexthe666.alexsmobs.entity.ai.SnowLeopardAIMelee;
+import com.github.alexthe666.alexsmobs.entity.ai.*;
 import com.github.alexthe666.alexsmobs.misc.AMSoundRegistry;
 import com.github.alexthe666.alexsmobs.misc.AMTagRegistry;
 import com.github.alexthe666.citadel.animation.Animation;
@@ -25,6 +22,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
@@ -65,6 +63,9 @@ public class EntitySnowLeopard extends Animal implements IAnimatedEntity, ITarge
         this.setMaxUpStep(2F);
     }
 
+    protected PathNavigation createNavigation(Level worldIn) {
+        return new AdvancedPathNavigateNoTeleport(this, worldIn, false);
+    }
 
     public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {
         return AMEntityRegistry.rollSpawn(AMConfig.snowLeopardSpawnRolls, this.getRandom(), spawnReasonIn);

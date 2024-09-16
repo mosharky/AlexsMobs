@@ -1,31 +1,7 @@
 <NEWLINE>
 <NEWLINE>
-Numerosas criaturas extrañas que habitan en el Overworld, Nether y End. 
-<NEWLINE>
- Este libro será su guía para utilizar todas las características de estas Criaturas.
-<NEWLINE>
-Traducido By Vicus Old
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
-<NEWLINE>
+Numerosas criaturas extrañas habitan en la Superficie, Nether y End. 
+Este libro pretende ser una guía para ayudar a identificar y hacer una crónica de estas diferentes especies de animales.
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
@@ -43,3 +19,4 @@ Traducido By Vicus Old
 <NEWLINE>
 <NEWLINE>
 .
+Traducido por Vicus Old y Orekuram

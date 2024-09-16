@@ -393,8 +393,8 @@ public class EntityCaiman extends TamableAnimal implements ISemiAquatic,IFollowe
 
     @Nullable
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel p_146743_, AgeableMob p_146744_) {
-        return null;
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
+        return AMEntityRegistry.CAIMAN.get().create(serverLevel);
     }
 
     public Vec3 getShakePreyPos() {

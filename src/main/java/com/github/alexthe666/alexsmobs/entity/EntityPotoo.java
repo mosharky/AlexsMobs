@@ -2,6 +2,7 @@ package com.github.alexthe666.alexsmobs.entity;
 
 import com.github.alexthe666.alexsmobs.AlexsMobs;
 import com.github.alexthe666.alexsmobs.config.AMConfig;
+import com.github.alexthe666.alexsmobs.entity.ai.AdvancedPathNavigateNoTeleport;
 import com.github.alexthe666.alexsmobs.entity.ai.FlightMoveController;
 import com.github.alexthe666.alexsmobs.entity.util.Maths;
 import com.github.alexthe666.alexsmobs.item.AMItemRegistry;
@@ -9,6 +10,7 @@ import com.github.alexthe666.alexsmobs.message.MessageMosquitoMountPlayer;
 import com.github.alexthe666.alexsmobs.misc.AMBlockPos;
 import com.github.alexthe666.alexsmobs.misc.AMSoundRegistry;
 import com.github.alexthe666.alexsmobs.misc.AMTagRegistry;
+import com.github.alexthe666.citadel.server.entity.pathfinding.raycoms.AdvancedPathNavigate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -98,11 +100,11 @@ public class EntityPotoo extends Animal implements IFalconry {
     private void switchNavigator(boolean onLand) {
         if (onLand) {
             this.moveControl = new MoveControl(this);
-            this.navigation = new GroundPathNavigation(this, level());
+            this.navigation = new AdvancedPathNavigateNoTeleport(this, level(), false);
             this.isLandNavigator = true;
         } else {
             this.moveControl = new FlightMoveController(this, 0.6F, false, true);
-            this.navigation = new FlyingPathNavigation(this, level()) {
+            this.navigation = new AdvancedPathNavigateNoTeleport(this, level(), AdvancedPathNavigate.MovementType.FLYING, false, false) {
                 public boolean isStableDestination(BlockPos pos) {
                     return !this.level.getBlockState(pos.below(2)).isAir();
                 }

@@ -311,7 +311,7 @@
       "scale": 1.2,
       "entity_scale": 1.3,
       "offset_x": 0,
-      "offset_y": 2,
+      "offset_y": 8,
       "linked_page": "shoebill.json",
       "hover_text": "entity.alexsmobs.shoebill"
     },

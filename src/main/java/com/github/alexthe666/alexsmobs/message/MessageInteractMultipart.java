@@ -40,19 +40,21 @@ public class MessageInteractMultipart {
 
         public static void handle(MessageInteractMultipart message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
 
-            if (player != null) {
-                if (player.level() != null) {
-                    Entity parent = player.level().getEntity(message.parent);
-                    if(player.distanceTo(parent) < 20 && parent instanceof Mob){
-                        player.interactOn(parent, message.offhand ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+                if (player != null) {
+                    if (player.level() != null) {
+                        Entity parent = player.level().getEntity(message.parent);
+                        if (player.distanceTo(parent) < 20 && parent instanceof Mob) {
+                            player.interactOn(parent, message.offhand ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
+                        }
                     }
                 }
-            }
+            });
         }
     }
 }

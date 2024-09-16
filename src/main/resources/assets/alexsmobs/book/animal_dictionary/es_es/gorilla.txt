@@ -1,10 +1,8 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-El Gorila es un simio enorme que se encuentra en grupos en las Selvas. Los Gorilas son protectores pacíficos de las Selvas, pero eso no
-los hace indefensos. El Gorila puede causar un daño masivo si es provocado. Cada grupo de Gorilas tiene un líder, Espalda Plateada,
-quien manda a sus tropas por la Selva. Son dos o tres veces más fuertes que cualquier otro Gorila, y a menudo se puede ver golpeando
-su pecho cuando está ansioso. Los Gorilas bebés a menudo se los puede encontrar es la espalda de sus padres mientras ellos se alimentan.
- <NEWLINE>
-Los Gorilas pueden volverse más confiables y amigables si se les dan Bananas. Las Bananas se pueden obtener rompiendo hojas de la Selva. Si reciben
-las suficientes Bananas, se puede ordenar a los Gorilas a que se sienten o deambulen, y automáticamente vendrá en defensa de su nuevo amigo.
+El gorila es un simio enorme que se encuentra en grupos en las junglas. Los gorilas son pacíficos protectores de la jungla, pero eso no los hace inofensivos. Los gorilas pueden causar daños enormes si se les provoca.
+Cada grupo de gorilas tiene un líder, de espalda plateada, que dirige su tropa a través de la jungla. Son dos o tres veces más fuertes que cualquier otro gorila y, a menudo, se les puede ver golpeándose el pecho cuando están ansiosos.
+Las crías de gorila a menudo se pueden encontrar en la espalda de sus padres mientras buscan alimento.
+<NEWLINE>
+Los gorilas pueden volverse más confiados y amigables al darles bananas. Las bananas se pueden obtener rompiendo hojas de jungla. Si se les dan suficientes, se les puede ordenar a los gorilas que se sienten o deambulen, y automáticamente saldrán en defensa de su nuevo amigo.

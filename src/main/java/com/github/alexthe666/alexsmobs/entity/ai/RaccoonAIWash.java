@@ -107,7 +107,7 @@ public class RaccoonAIWash extends Goal {
         int range = 32;
         for (int i = 0; i < 15; i++) {
             BlockPos blockpos1 = this.raccoon.blockPosition().offset(random.nextInt(range) - range / 2, 3, random.nextInt(range) - range / 2);
-            while (this.raccoon.level().isEmptyBlock(blockpos1) && blockpos1.getY() > 1) {
+            while (this.raccoon.level().isEmptyBlock(blockpos1) && blockpos1.getY() > raccoon.level().getMinBuildHeight()) {
                 blockpos1 = blockpos1.below();
             }
             if (isConnectedToLand(blockpos1)) {

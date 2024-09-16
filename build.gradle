@@ -17,7 +17,6 @@ plugins {
     id 'net.neoforged.gradle' version '[6.0.18,6.2)'
     id 'org.spongepowered.mixin' version '0.7.+'
 }
-
 repositories{
     maven {
         name = "CurseForge"
@@ -37,7 +36,7 @@ repositories{
     }
 }
 
-version = '1.22.8'
+version = '1.22.9'
 group = 'com.github.alexthe667' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'alexsmobs'
 
@@ -54,7 +53,7 @@ minecraft {
         client {
             workingDirectory project.file('run')
             property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
-            arg "-mixin.config="+"citadel.mixins.json"
+            arg "-mixin.config=" + "citadel.mixins.json"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
@@ -63,48 +62,37 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                alexsmobs {
                     source sourceSets.main
                 }
             }
         }
 
         server {
-            workingDirectory project.file('run')
             properties 'mixin.env.remapRefMap': 'true'
             property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', sourceSets.main.resources.srcDirs[0]
+            workingDirectory project.file('run')
+            arg "-mixin.config="+"citadel.mixins.json"
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                alexsmobs {
                     source sourceSets.main
                 }
             }
         }
 
         data {
+            properties 'mixin.env.remapRefMap': 'true'
+            property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
             workingDirectory project.file('run')
-              properties 'mixin.env.remapRefMap': 'true'
-              property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
-              args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', sourceSets.main.resources.srcDirs[0]
+            arg "-mixin.config="+"citadel.mixins.json"
 
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
             mods {
-                examplemod {
+                alexsmobs {
                     source sourceSets.main
                 }
             }
@@ -118,7 +106,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     minecraft 'net.neoforged:forge:1.20.1-47.1.65'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    implementation fg.deobf("curse.maven:citadel-331936:4744075")
+    implementation fg.deobf("curse.maven:citadel-331936:5633260")
     compileOnly(fg.deobf("mezz.jei:jei-${jei_mc_version}-common-api:${jei_version}"))
     compileOnly(fg.deobf("mezz.jei:jei-${jei_mc_version}-forge-api:${jei_version}"))
     runtimeOnly(fg.deobf("mezz.jei:jei-${jei_mc_version}-forge:${jei_version}"))

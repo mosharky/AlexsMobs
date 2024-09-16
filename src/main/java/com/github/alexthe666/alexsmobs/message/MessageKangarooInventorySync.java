@@ -42,23 +42,25 @@ public class MessageKangarooInventorySync {
 
         public static void handle(MessageKangarooInventorySync message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
 
-            if (player != null) {
-                if (player.level() != null) {
-                    Entity entity = player.level().getEntity(message.kangaroo);
-                    if(entity instanceof EntityKangaroo && ((EntityKangaroo) entity).kangarooInventory != null){
-                        if(message.slotId < 0){
+                if (player != null) {
+                    if (player.level() != null) {
+                        Entity entity = player.level().getEntity(message.kangaroo);
+                        if (entity instanceof EntityKangaroo && ((EntityKangaroo) entity).kangarooInventory != null) {
+                            if (message.slotId < 0) {
 
-                        }else{
-                            ((EntityKangaroo) entity).kangarooInventory.setItem(message.slotId, message.stack);
+                            } else {
+                                ((EntityKangaroo) entity).kangarooInventory.setItem(message.slotId, message.stack);
+                            }
                         }
                     }
                 }
-            }
+            });
         }
     }
 }

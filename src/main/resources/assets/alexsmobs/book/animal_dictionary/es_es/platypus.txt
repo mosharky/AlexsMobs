@@ -1,9 +1,8 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-El ornitorrinco es una criatura que parece una combinación de varios otros animales, pero es completamente único por derecho propio. Rara vez se puede encontrar en los biomas fluviales del supramundo.
-Este extraño mamífero tiene espinas venenosas en sus patas, que puede usar para infligir efectos de veneno a cualquier atacante.
-El débil sentido del olfato, el oído y la vista del ornitorrinco lo han llevado a depender de la electricidad para cazar y navegar. Debido a esto, el ornitorrinco se siente atraído naturalmente por la piedra roja cuando se sostiene. Si se alimenta con piedra roja, el ornitorrinco recargará su sensibilidad eléctrica y buscará algunos gusanos en los bloques de arcilla cercanos.
-Cuando busque comida, el ornitorrinco desenterrará varias bolas de arcilla y gusanos, que luego podrá recolectar. Si se alimenta con un bloque de piedra roja completo, la cantidad de elementos desenterrados aumentará considerablemente.
-Al igual que otras pequeñas criaturas acuáticas, el ornitorrinco se puede transportar en un cubo de agua. Se puede criar con colas de langosta, su comida favorita.
-
+El ornitorrinco es una criatura que parece una combinación de varios otros animales, pero es completamente única por derecho propio. Se puede encontrar con baja frecuencia en biomas fluviales de la Superficie.
+Este extraño mamífero tiene espolones venenosos en sus patas, que puede utilizar para infligir efectos venenosos a cualquier atacante.
+Los débiles sentidos del olfato, el oído y la vista del ornitorrinco lo han llevado a depender de la electrorrecepción para cazar y navegar. Debido a esto, el ornitorrinco se siente atraído naturalmente por la redstone cuando se le ofrece. Si se le alimenta con redstone, el ornitorrinco recargará su sensibilidad eléctrica y buscará algunos gusanos en los bloques de arcilla cercanos.
+Cuando busca comida, el ornitorrinco desentierra varias bolas de arcilla y gusanos, los que luego puede recoger. Si se alimenta con un bloque de redstone, la cantidad de elementos desenterrados aumentará considerablemente.
+Al igual que otras pequeñas criaturas acuáticas, el ornitorrinco puede recogerse con un cubo con agua. Se puede criar con colas de langosta, su comida favorita.

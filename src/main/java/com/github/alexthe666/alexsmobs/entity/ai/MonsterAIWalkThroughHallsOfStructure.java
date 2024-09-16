@@ -48,23 +48,23 @@ public class MonsterAIWalkThroughHallsOfStructure extends RandomStrollGoal {
     @Nullable
     protected Vec3 getPosition() {
         StructureStart start = getNearestStructure(mob.blockPosition());
-        if(start != null && start.isValid() || errorCooldown > 0){
-            List<BlockPos> validPieceCenters = new ArrayList<>();
-            for(StructurePiece piece : start.getPieces()){
-                BoundingBox boundingbox = piece.getBoundingBox();
-                BlockPos blockpos = boundingbox.getCenter();
-                BlockPos blockpos1 = new BlockPos(blockpos.getX(), boundingbox.minY(), blockpos.getZ());
-                double yDist = Math.abs(blockpos1.getY() - mob.blockPosition().getY());
-                if(this.mob.distanceToSqr(Vec3.atCenterOf(blockpos1)) <= this.maximumDistance * this.maximumDistance && yDist < maximumYDistance){
-                    validPieceCenters.add(blockpos1);
+        if(start != null && start.isValid() && errorCooldown <= 0){
+            List<StructurePiece> pieces = start.getPieces();
+                List<BlockPos> validPieceCenters = new ArrayList<>();
+                for(StructurePiece piece : pieces){
+                    BoundingBox boundingbox = piece.getBoundingBox();
+                    BlockPos blockpos = boundingbox.getCenter();
+                    BlockPos blockpos1 = new BlockPos(blockpos.getX(), boundingbox.minY(), blockpos.getZ());
+                    double yDist = Math.abs(blockpos1.getY() - mob.blockPosition().getY());
+                    if(this.mob.distanceToSqr(Vec3.atCenterOf(blockpos1)) <= this.maximumDistance * this.maximumDistance && yDist < maximumYDistance){
+                        validPieceCenters.add(blockpos1);
+                    }
                 }
-            }
-            if(!validPieceCenters.isEmpty()){
-                BlockPos randomCenter = validPieceCenters.size() > 1 ? validPieceCenters.get(mob.getRandom().nextInt(validPieceCenters.size() - 1)) : validPieceCenters.get(0);
-                return Vec3.atCenterOf(randomCenter.offset(mob.getRandom().nextInt(2) - 1, 0, mob.getRandom().nextInt(2) - 1));
+                if(!validPieceCenters.isEmpty()){
+                    BlockPos randomCenter = validPieceCenters.size() > 1 ? validPieceCenters.get(mob.getRandom().nextInt(validPieceCenters.size() - 1)) : validPieceCenters.get(0);
+                    return Vec3.atCenterOf(randomCenter.offset(mob.getRandom().nextInt(2) - 1, 0, mob.getRandom().nextInt(2) - 1));
 
-            }
-
+                }
         }
         return getPositionTowardsAnywhere();
     }

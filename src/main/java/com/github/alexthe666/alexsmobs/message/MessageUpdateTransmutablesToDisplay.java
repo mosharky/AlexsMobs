@@ -44,16 +44,17 @@ public class MessageUpdateTransmutablesToDisplay {
 
         public static void handle(MessageUpdateTransmutablesToDisplay message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
-            if(player.getId() == message.playerId){
-                AlexsMobs.PROXY.setDisplayTransmuteResult(0, message.stack1);
-                AlexsMobs.PROXY.setDisplayTransmuteResult(1, message.stack2);
-                AlexsMobs.PROXY.setDisplayTransmuteResult(2, message.stack3);
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
+                if (player.getId() == message.playerId) {
+                    AlexsMobs.PROXY.setDisplayTransmuteResult(0, message.stack1);
+                    AlexsMobs.PROXY.setDisplayTransmuteResult(1, message.stack2);
+                    AlexsMobs.PROXY.setDisplayTransmuteResult(2, message.stack3);
+                }
+            });
         }
     }
-
 }

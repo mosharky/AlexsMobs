@@ -529,7 +529,7 @@ public class EntityCatfish extends WaterAnimal implements FlyingAnimal, Bucketab
 
     private boolean isFood(Entity entity) {
         if (this.getCatfishSize() == 2) {
-            return entity instanceof Mob && !(entity instanceof EntityCatfish) && entity.getBbHeight() <= 1.0F;
+            return !entity.getType().is(AMTagRegistry.CATFISH_IGNORE_EATING) && entity instanceof Mob && !(entity instanceof EntityCatfish) && entity.getBbHeight() <= 1.0F;
         } else {
             return entity instanceof ItemEntity && ((ItemEntity) entity).getAge() > 35;
         }

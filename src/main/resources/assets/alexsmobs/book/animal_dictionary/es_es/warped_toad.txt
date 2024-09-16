@@ -2,8 +2,8 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-El Sapo Distorsionado es un gigante, anfibio raro nativo de los Bosques Distorsionados del Nether. Esta rana mutante neutral está cubierto de un Brillongo, que tiene una posibilidad de caer cuando muere.
-Aunque se lo encuentra en casa saltando a lo largo de los Bosques Distorsionados, también es un experto nadador tanto en lava como en agua. Las presas favoritas de los Sapos Distorsionados son las Moscas y los Mosquitos Carmesí,
-Los cuales ellos dispararán su lengua a velocidades extremadamente rápidas para capturar. Debido a que estos Mosquitos son raros en sus Bosques Distorsionados nativos, estos Sapos harán cualquier cosa por la Larva del Mosquito Carmesí,
-que se puede elaborar con un Gusano y un Probóscide de Mosquito Carmesí. Se pueden utilizar múltiples Larvas para domesticar al Sapo Distorsionado, el cual luego se puede hacer deambular, quedarse o seguir. El Sapo defenderá a su domador cuando esté deambulando o siguiendote, 
-y puede ser una defensa útil contra los insectos gigantes que deambulan por el Nether. Estos Sapos pueden ser sanados con Gusanos, y reproducidos con la ya mencionada Larva de Mosquito.
+El sapo distorsionado es un anfibio gigante y poco común originario de los bosques distorsionados del Nether. Esta rana mutante neutral está cubierta de esporas de brillongo, que tiene una posibilidad de soltar cuando muere.
+Aunque se siente a gusto saltando por los bosques, también es un experto nadador tanto en lava como en agua. Las presas favoritas de los sapos distorsionados son las moscas y los mosquitos carmesí, a los que sacarán la lengua a velocidades extremadamente rápidas para atraparlos.
+Debido a que estos mosquitos son raros en los bosques distorsionados, estos sapos harán cualquier cosa por larvas de mosquito carmesí, que se pueden elaborar con un gusano y una probóscide de mosquito carmesí.
+Se pueden usar múltiples larvas para domesticar al sapo distorsionado, al que luego le puede ordenar deambular, esperar o seguir. El sapo defenderá a su amo cuando esté deambulando o siguiéndole, y puede ser una defensa útil contra los insectos gigantes que deambulan por el Nether.
+Estos sapos se pueden curar con gusanos y criar con la larva de mosquito ya mencionada.

@@ -184,7 +184,7 @@ public class EntityElephant extends TamableAnimal implements ITargetsDroppedItem
     }
 
     protected PathNavigation createNavigation(Level worldIn) {
-        return new GroundPathNavigatorWide(this, worldIn);
+        return new AdvancedPathNavigateNoTeleport(this, worldIn, true);
     }
 
     public int getMaxHeadYRot() {
@@ -887,7 +887,7 @@ public class EntityElephant extends TamableAnimal implements ITargetsDroppedItem
     }
 
     public double getMaxDistToItem() {
-        return 5.0D;
+        return Math.pow(this.getBbWidth() + 3.0F, 2.0F);
     }
 
     public void positionRider(Entity passenger, Entity.MoveFunction moveFunc) {

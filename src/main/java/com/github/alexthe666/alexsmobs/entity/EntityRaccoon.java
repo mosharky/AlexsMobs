@@ -42,6 +42,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -338,6 +339,16 @@ public class EntityRaccoon extends TamableAnimal implements IAnimatedEntity, IFo
             }
             return super.hurt(source, amount);
         }
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        boolean flag = !(this.getControllingPassenger() instanceof Mob);
+        boolean flag1 = !(this.getVehicle() instanceof Boat);
+        boolean flag2 = this.getFirstPassenger() instanceof EntityBlueJay;
+        this.goalSelector.setControlFlag(Goal.Flag.MOVE, flag || flag2);
+        this.goalSelector.setControlFlag(Goal.Flag.JUMP, flag && flag1 || flag2);
+        this.goalSelector.setControlFlag(Goal.Flag.LOOK, flag || flag2);
     }
 
     public void tick() {

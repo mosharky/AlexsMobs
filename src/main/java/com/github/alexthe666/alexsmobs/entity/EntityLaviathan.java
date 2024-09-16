@@ -29,10 +29,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.BodyRotationControl;
-import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -46,7 +43,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -55,7 +51,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
@@ -63,6 +58,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 
 import javax.annotation.Nullable;
@@ -111,6 +107,8 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
     private int headPeakCooldown = 0;
     private boolean hasObsidianArmor;
     private int blockBreakCounter;
+    private double lastX = 0;
+    private double lastZ = 0;
 
     protected EntityLaviathan(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -142,11 +140,9 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
     public static boolean canLaviathanSpawn(EntityType<EntityLaviathan> p_234314_0_, LevelAccessor p_234314_1_, MobSpawnType p_234314_2_, BlockPos p_234314_3_, RandomSource p_234314_4_) {
         BlockPos.MutableBlockPos blockpos$mutable = p_234314_3_.mutable();
-
         do {
             blockpos$mutable.move(Direction.UP);
-        } while(p_234314_1_.getFluidState(blockpos$mutable).is(FluidTags.LAVA));
-
+        } while (p_234314_1_.getFluidState(blockpos$mutable).is(FluidTags.LAVA));
         return p_234314_1_.getBlockState(blockpos$mutable).isAir();
     }
 
@@ -180,7 +176,9 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
     }
 
     public void push(Entity entity) {
-        entity.setDeltaMovement(entity.getDeltaMovement().add(this.getDeltaMovement()));
+        if (!entity.isPassengerOfSameVehicle(this)) {
+            entity.setDeltaMovement(entity.getDeltaMovement().add(this.getDeltaMovement()));
+        }
     }
 
     public boolean isFood(ItemStack stack) {
@@ -258,8 +256,7 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
         Player player = null;
         if (this.hasHeadGear() && this.hasBodyGear()) {
             for (Entity passenger : this.getPassengers()) {
-                if (passenger instanceof Player) {
-                    Player player2 = (Player) passenger;
+                if (passenger instanceof Player player2) {
                     int player2Position = getRiderPosition(passenger);
                     if (player == null || playerPosition > player2Position) {
                         player = player2;
@@ -373,20 +370,18 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
     private void switchNavigator(boolean onLand) {
         if (onLand) {
-            this.lookControl = new LookControl(this);
             this.moveControl = new MoveControl(this);
             this.navigation = createNavigation(level());
             this.isLandNavigator = true;
         } else {
-            this.lookControl = new SmoothSwimmingLookControl(this, 15);
             this.moveControl = new MoveController(this);
             this.navigation = new BoneSerpentPathNavigator(this, level());
             this.isLandNavigator = false;
         }
     }
 
-    protected PathNavigation createNavigation(Level p_21480_) {
-        return new GroundPathNavigatorWide(this, p_21480_);
+    protected PathNavigation createNavigation(Level level) {
+        return new GroundPathNavigatorWide(this, level);
     }
 
     protected void registerGoals() {
@@ -396,13 +391,13 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
                 return super.canUse() && !EntityLaviathan.this.hasHeadGear();
             }
         });
-        this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));;
+        this.goalSelector.addGoal(1, new BreedGoal(this, 1.0D));
         this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredient.fromValues(Stream.of(new Ingredient.TagValue(AMTagRegistry.LAVIATHAN_BREEDABLES), new Ingredient.TagValue(AMTagRegistry.LAVIATHAN_FOODSTUFFS))), false));
         this.goalSelector.addGoal(4, new AnimalAIFindWaterLava(this, 1.0D));
         this.goalSelector.addGoal(5, new LaviathanAIRandomSwimming(this, 1.0D, 22) {
             @Override
             public boolean canUse() {
-                return super.canUse() && !EntityLaviathan.this.hasHeadGear()  && !EntityLaviathan.this.hasBodyGear();
+                return super.canUse() && !EntityLaviathan.this.hasHeadGear() && !EntityLaviathan.this.hasBodyGear();
             }
         });
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
@@ -442,47 +437,46 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
         if (player.zza != 0) {
             float f = player.zza < 0.0F ? 0.5F : 1.0F;
             Vec3 lookVec = player.getLookAngle();
-            float y = (float) lookVec.y * 0.3F;
-            float waterAt = (float)EntityLaviathan.this.getMaxFluidHeight();
+            float y = (float) lookVec.y * 0.1F;
+            float waterAt = (float) EntityLaviathan.this.getMaxFluidHeight();
             float half = EntityLaviathan.this.getBbHeight() * 0.5F;
-            if(waterAt > half){
-                y = Mth.clamp(waterAt - half, 0F, 0.5F);
-            }else if(waterAt < half){
-                y = Mth.clamp(waterAt - half, -0.5F, 0F);
+            if (waterAt > half) {
+                y = Mth.clamp(waterAt - half, 0F, 0.15F);
+            } else if (waterAt < half) {
+                y = Mth.clamp(waterAt - half, -0.15F, 0F);
             }
-            return new Vec3(player.xxa * 0.25F, y, player.zza * (shouldSwim() ? 2.0F : 0.5F) * f);
+            if (horizontalCollision) {
+                y += 0.4F;
+            }
+            Vec3 vec3 = new Vec3(player.xxa * 0.25F, y, player.zza * (shouldSwim() ? 0.75F : 0.25F) * f);
+            this.setSprinting(true);
+            return vec3;
         } else {
             this.setSprinting(false);
         }
         return Vec3.ZERO;
     }
+
     protected void tickRidden(Player player, Vec3 vec3) {
         super.tickRidden(player, vec3);
-        if(this.shouldSwim()){
-            if(this.getDeltaMovement().y < 0){
-                this.setDeltaMovement(this.getDeltaMovement().multiply(1F, 0.3F, 1F));
-            }
-            if(this.horizontalCollision){
-                this.setDeltaMovement(this.getDeltaMovement().add(0, 0.1F, 0));
-            }
-        }
-        if(player.zza != 0 || player.xxa != 0){
-            this.setYRot(player.getYRot());
-            this.setMaxUpStep(1);
-            this.getNavigation().stop();
-            this.setTarget(null);
-            this.setSprinting(true);
-        }
+        this.setRot(player.getYRot(), player.getXRot() * 0.5F);
+        this.setYHeadRot(player.getYHeadRot());
+        this.setMaxUpStep(1.3F);
+        this.setTarget(null);
     }
 
     protected float getRiddenSpeed(Player rider) {
-        return (float)(this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+        return (float) (this.getAttributeValue(Attributes.MOVEMENT_SPEED));
+    }
+
+    @Override
+    public double getFluidMotionScale(FluidType type) {
+        return type == ForgeMod.WATER_TYPE.get() || type == ForgeMod.LAVA_TYPE.get() ? 1.0F : super.getFluidMotionScale(type);
     }
 
     public boolean hurt(DamageSource source, float amount) {
         boolean prev = super.hurt(source, amount);
         if (prev && source.getEntity() != null) {
-            double range = 15;
             int fleeTime = 100 + getRandom().nextInt(150);
             this.revengeCooldown = fleeTime;
             this.setChillTime(0);
@@ -503,21 +497,25 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
     }
 
     public void travel(Vec3 travelVector) {
-        boolean liquid = this.shouldSwim();
-        if (this.isEffectiveAi() && liquid) {
+        boolean liquid = this.isInLava() || this.isInWater();
+        if (this.isControlledByLocalInstance() && liquid) {
             this.moveRelative(this.getSpeed(), travelVector);
             this.move(MoverType.SELF, this.getDeltaMovement());
-            this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
-            if(!this.isChilling()){
-             //   this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.008D, 0.0D));
+            this.setDeltaMovement(this.getDeltaMovement().scale(isVehicle() ? 0.5D : 0.9D));
+            this.calculateEntityAnimation(false);
+            if(!this.isVehicle() && !this.isChilling()){
+                this.setDeltaMovement(this.getDeltaMovement().add(0, -0.01F, 0));
             }
         } else {
             super.travel(travelVector);
         }
     }
 
-    public void setDeltaMovement(Vec3 p_20257_) {
-        super.setDeltaMovement(p_20257_);
+    public void calculateEntityAnimation(boolean flying) {
+        float f1 = (float) Mth.length(this.getX() - this.lastX, 0, this.getZ() - this.lastZ);
+        float walkSpeed = 4.0F;
+        float f2 = Math.min(f1 * walkSpeed, 1.0F);
+        walkAnimation.update(f2, 0.4F);
     }
 
     public int getMaxHeadXRot() {
@@ -530,11 +528,6 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
     public int getHeadRotSpeed() {
         return 4;
-    }
-
-    @Override
-    protected BodyRotationControl createBodyControl() {
-        return new LaviathanBodyRotationControl(this);
     }
 
     public boolean canBreatheUnderwater() {
@@ -551,12 +544,10 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
     public void tick() {
         super.tick();
-
+        this.yBodyRot = Mth.approachDegrees(this.yBodyRotO, yBodyRot, getHeadRotSpeed());
         prevSwimProgress = swimProgress;
         prevBiteProgress = biteProgress;
         prevHeadHeight = this.getHeadHeight();
-        this.yBodyRot = this.getYRot();
-
         if (shouldSwim()) {
             if (swimProgress < 5F)
                 swimProgress++;
@@ -597,7 +588,7 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
                 this.allParts[j].collideWithNearbyEntities();
                 avector3d[j] = new Vec3(this.allParts[j].getX(), this.allParts[j].getY(), this.allParts[j].getZ());
             }
-            float yaw = this.getYRot() * Mth.DEG_TO_RAD;
+            float yaw = this.yBodyRot * Mth.DEG_TO_RAD;
             float neckContraction = 2.0F * Math.abs(getHeadHeight() / 3) + 0.5F * Math.abs(getHeadYaw(0) / 50F);
 
             for (int l = 0; l < this.theEntireNeck.length; ++l) {
@@ -649,7 +640,7 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
             if (revengeCooldown > 0) {
                 revengeCooldown--;
             }
-            if(headPeakCooldown > 0){
+            if (headPeakCooldown > 0) {
                 headPeakCooldown--;
             }
             if (revengeCooldown == 0 && this.getLastHurtByMob() != null) {
@@ -724,14 +715,15 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
                 }
             }
         }
-        if(this.isVehicle() && !this.level().isClientSide && tickCount % 40 == 0 && this.getPassengers().size() > 3){
-            for(Entity entity : this.getPassengers()){
-                if(entity instanceof ServerPlayer){
-                    AMAdvancementTriggerRegistry.LAVIATHAN_FOUR_PASSENGERS.trigger((ServerPlayer)entity);
+        if (this.isVehicle() && !this.level().isClientSide && tickCount % 40 == 0 && this.getPassengers().size() > 3) {
+            for (Entity entity : this.getPassengers()) {
+                if (entity instanceof ServerPlayer) {
+                    AMAdvancementTriggerRegistry.LAVIATHAN_FOUR_PASSENGERS.trigger((ServerPlayer) entity);
                 }
             }
-
         }
+        lastX = this.getX();
+        lastZ = this.getZ();
     }
 
 
@@ -773,7 +765,7 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
     public float getLowHeadHeight() {
         float checkAt = 0F;
-        while (checkAt > -3F && !isHeadInWall((float) this.getY() + checkAt) && !isHeadInLava((float)this.getY() + checkAt)) {
+        while (checkAt > -3F && !isHeadInWall((float) this.getY() + checkAt) && !isHeadInLava((float) this.getY() + checkAt)) {
             checkAt -= 0.2F;
         }
         return checkAt;
@@ -782,7 +774,7 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
     public float getHighHeadHeight(float low) {
         float checkAt = 3F;
         while (checkAt > 0) {
-            if(isHeadInWall((float) this.getY() + checkAt)  && !isHeadInLava((float)this.getY() + checkAt)) {
+            if (isHeadInWall((float) this.getY() + checkAt) && !isHeadInLava((float) this.getY() + checkAt)) {
                 break;
             }
             checkAt -= 0.2F;
@@ -791,18 +783,13 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
         return checkAt;
     }
 
-    public boolean canStandOnFluid(Fluid p_230285_1_) {
-        return false;
-    }
-
-
     public boolean isHeadInWall(float offset) {
         if (this.noPhysics) {
             return false;
         } else {
             float f = 0.8F;
             Vec3 vec3 = new Vec3(headPart.getX(), offset, headPart.getZ());
-            AABB axisalignedbb = AABB.ofSize(vec3, (double)f, 1.0E-6D, (double)f);
+            AABB axisalignedbb = AABB.ofSize(vec3, f, 1.0E-6D, f);
             return this.level().getBlockStates(axisalignedbb).filter(Predicate.not(BlockBehaviour.BlockStateBase::isAir)).anyMatch((p_185969_) -> {
                 BlockPos blockpos = AMBlockPos.fromVec3(vec3);
                 return p_185969_.isSuffocating(this.level(), blockpos) && Shapes.joinIsNotEmpty(p_185969_.getCollisionShape(this.level(), blockpos).move(vec3.x, vec3.y, vec3.z), Shapes.create(axisalignedbb), BooleanOp.AND);
@@ -829,9 +816,7 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
             } else {
                 this.setDeltaMovement(this.getDeltaMovement().x, 0.0F, this.getDeltaMovement().z);
             }
-
         }
-
     }
 
     public Vec3 getDismountLocationForPassenger(LivingEntity livingEntity) {
@@ -907,6 +892,13 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
         return (float) (l + 1);
     }
 
+    public boolean causeFallDamage(float distance, float damageMultiplier) {
+        return false;
+    }
+
+    protected void checkFallDamage(double y, boolean onGroundIn, BlockState state, BlockPos pos) {
+    }
+
     public boolean checkSpawnObstruction(LevelReader worldIn) {
         return worldIn.isUnobstructed(this);
     }
@@ -929,14 +921,6 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
     public void setHeadHeight(float height) {
         this.entityData.set(HEAD_HEIGHT, Mth.clamp(height, -3, 3));
-    }
-
-    public float getHeadYRotPlecio() {
-        return Mth.wrapDegrees(this.entityData.get(HEAD_YROT));
-    }
-
-    public void setHeadYRotPlecio(float rot) {
-        this.entityData.set(HEAD_YROT, rot);
     }
 
     public boolean isObsidian() {
@@ -1074,13 +1058,6 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
 
         public void tick() {
             float speed = (float) (this.speedModifier * 3 * laviathan.getAttributeValue(Attributes.MOVEMENT_SPEED));
-            if (!laviathan.isVehicle()) {
-                if (this.laviathan.isChilling()) {
-                    speed *= 0.5F;
-                } else if (this.laviathan.shouldSwim()) {
-                    this.laviathan.setDeltaMovement(this.laviathan.getDeltaMovement().add(0.0D, -0.005D, 0.0D));
-                }
-            }
             if (this.operation == Operation.MOVE_TO && (!this.laviathan.getNavigation().isDone() || laviathan.getControllingPassenger() != null)) {
                 double lvt_1_1_ = this.wantedX - laviathan.getX();
                 double lvt_3_1_ = this.wantedY - laviathan.getY();
@@ -1093,14 +1070,6 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
                     float lvt_9_1_ = (float) (Mth.atan2(lvt_5_1_, lvt_1_1_) * 57.2957763671875D) - 90.0F;
                     this.laviathan.setYRot(this.rotlerp(this.laviathan.getYRot(), lvt_9_1_, 5F));
                     this.laviathan.setYHeadRot(this.rotlerp(this.laviathan.getYHeadRot(), lvt_9_1_, 90.0F));
-                    //BlockPos blockpos = this.mob.blockPosition();
-                    //BlockState blockstate = this.mob.level().getBlockState(blockpos);
-                    //VoxelShape voxelshape = blockstate.getCollisionShape(this.mob.level(), blockpos);
-                    if (lvt_3_1_ >= 0 && laviathan.horizontalCollision) {
-                        laviathan.setDeltaMovement(laviathan.getDeltaMovement().add(0.0D, 0.5D, 0.0D));
-                    } else {
-                        laviathan.setDeltaMovement(laviathan.getDeltaMovement().add(0.0D, (double) laviathan.getSpeed() * lvt_3_1_ * 0.6D, 0.0D));
-                    }
                     if (laviathan.shouldSwim()) {
                         laviathan.setSpeed(speed * 0.03F);
                         float lvt_11_1_ = -((float) (Mth.atan2(lvt_3_1_, Mth.sqrt((float) (lvt_1_1_ * lvt_1_1_ + lvt_5_1_ * lvt_5_1_))) * 57.2957763671875D));
@@ -1115,21 +1084,9 @@ public class EntityLaviathan extends Animal implements ISemiAquatic, IHerdPanic 
                     }
 
                 }
-            }else if(!laviathan.level().getBlockState(this.laviathan.blockPosition().above()).getFluidState().isEmpty() && laviathan.getChillTime() <= 0){
+            } else if (!laviathan.level().getBlockState(this.laviathan.blockPosition().above()).getFluidState().isEmpty() && laviathan.getChillTime() <= 0) {
                 this.laviathan.setDeltaMovement(this.laviathan.getDeltaMovement().add(0.0D, -0.05D, 0.0D));
             }
-        }
-    }
-
-    private static class LaviathanBodyRotationControl extends BodyRotationControl {
-        private final EntityLaviathan laviathan;
-
-        public LaviathanBodyRotationControl(EntityLaviathan laviathan) {
-            super(laviathan);
-            this.laviathan = laviathan;
-        }
-
-        public void clientTick() {
         }
     }
 }

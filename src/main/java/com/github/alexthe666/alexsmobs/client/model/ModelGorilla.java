@@ -217,6 +217,7 @@ public class ModelGorilla extends AdvancedEntityModel<EntityGorilla> {
 		progressRotationPrev(leftArm, sitProgress, Maths.rad(20), 0, 0, 10F);
 		progressRotationPrev(rightArm, sitProgress, Maths.rad(20), 0, 0, 10F);
 		progressPositionPrev(body, sitProgress, 0, 8, 0, 10F);
+		progressPositionPrev(chest, sitProgress, 0, -0.5F, 1.5F, 10F);
 		progressPositionPrev(head, sitProgress, 0, 4, -2, 10F);
 		progressPositionPrev(leftArm, sitProgress, 0, 0, 2, 10F);
 		progressPositionPrev(rightArm, sitProgress, 0, 0, 2, 10F);

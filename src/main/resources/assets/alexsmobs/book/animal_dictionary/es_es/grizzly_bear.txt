@@ -2,12 +2,9 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-El Oso Pardo es un mamífero grande y omnívoro que se encuentra en los biomas de Bosque. A menudo puede ser encontrado con uno o dos cachorros de Oso, 
-que siguen a sus padres. Cualquier viajero o cazador que no esté preparado debe mantenerse alejado de un Oso Pardo, ya que a pesar de que son
-neutrales a distancia, ellos se vuelven hostiles cuando se acercan. Los Pardos son bien conocidos por asarltar cualquier colmena con miel,
-rasgándola y festejando sobre el interior de los paneles. Si un Oso Pardo ha sido saciado recientemente con miel, se puede acercar 
-con seguridad. Se cree que alimentar un Oso Pardo con un salmón después de haber comido miel podría resultar en ganarse la confianza
-de la bestia, aunque pocos sobreviven a encuentros cercanos con estos Osos. Aquellos que afirman que ellos pueden usarse como monturas de guerra.
+El oso pardo es un mamífero omnívoro grande que se encuentra en los biomas forestales. A menudo se lo puede encontrar con uno o dos oseznos, que siguen a sus padres. Cualquier viajero o cazador que no esté preparado debe mantenerse alejado de un oso pardo, ya que aunque son neutrales a distancia, se vuelven hostiles cuando se les acerca.
+Los osos pardos son bien conocidos por asaltar cualquier colmena con miel, abrirla y darse un festín con los panales del interior. Si un oso pardo ha sido saciado recientemente con miel, se puede acercarse a él con seguridad. Se cree que alimentar a un oso pardo con salmón después de haber comido miel podría ganarse la confianza de la bestia, aunque pocos sobreviven a encuentros cercanos con estos osos. Aquellos que sí afirman que pueden usarse como monturas de guerra.
 <NEWLINE>
-Ocacionalmente, Los Osos Pardos pueden perder un poco de su pelo. Este pelo se puede utilizar para elaborar una Poción de resistencia a la Estabilidad, 
-cuando se combina con una Poción de fuerza.
+Ocasionalmente, los osos pardos pueden perder parte de su pelaje. Este pelo se puede combinar con una poción de fuerza para crear una poción de resistencia a los golpes.
+<NEWLINE>
+Cuando nieva, el pelaje del oso puede quedar cubierto de nieve. Esto se puede quitar con una pala. Alternativamente, se puede cubrir un oso con nieve colocándole una capa de nieve. Esta nieve se derretirá si el oso está bajo el agua, la lluvia o en un bioma caliente.

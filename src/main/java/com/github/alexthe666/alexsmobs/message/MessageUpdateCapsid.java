@@ -41,21 +41,23 @@ public class MessageUpdateCapsid  {
 
         public static void handle(MessageUpdateCapsid message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
-            if (player != null) {
-                if (player.level() != null) {
-                    BlockPos pos = BlockPos.of(message.blockPos);
-                    if (player.level().getBlockEntity(pos) != null) {
-                        if (player.level().getBlockEntity(pos) instanceof TileEntityCapsid) {
-                            TileEntityCapsid podium = (TileEntityCapsid) player.level().getBlockEntity(pos);
-                            podium.setItem(0, message.heldStack);
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
+                if (player != null) {
+                    if (player.level() != null) {
+                        BlockPos pos = BlockPos.of(message.blockPos);
+                        if (player.level().getBlockEntity(pos) != null) {
+                            if (player.level().getBlockEntity(pos) instanceof TileEntityCapsid) {
+                                TileEntityCapsid podium = (TileEntityCapsid) player.level().getBlockEntity(pos);
+                                podium.setItem(0, message.heldStack);
+                            }
                         }
                     }
                 }
-            }
+            });
         }
     }
 

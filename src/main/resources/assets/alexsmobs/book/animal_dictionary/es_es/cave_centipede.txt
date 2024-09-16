@@ -1,10 +1,9 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-El Ciempiés de Cueva, es un raro artrópodo subterráneo que se se pueden encontrar en lo profundo de las Cuevas. Es hostil hacia cualquiera que se encuentre en su dominio.
-Aunque es lento, este artrópodo gigante y pesado puede causar una cantidad peligrosa de daño y tiene una mordedura venenosa.
+El ciempiés de cueva es un raro artrópodo subterráneo que se encuentra en las profundidades de las cuevas. Es hostil hacia cualquiera que se encuentre en su dominio.
+Aunque lento, este artrópodo gigante y engorroso puede causar una cantidad peligrosa de daño y tiene una mordedura venenosa.
 <NEWLINE>
-Cuando es asesinado, ellos tienen una oportunidad de dejar caer una o más de sus Patas.
-Estas Patas se pueden utilizar para fabricar un par de pantalones que otorga a su portador la habilidad de escalar paredes, junto con una defensa aumentada.
-Ellas también se pueden fermentar con un Frasco con Saliva de Dragón Komodo para crear una Esencia venenosa, las cuales cuando se elabora con un Traqueteo de Cascabel
-puede crear una Poción de resistencia al veneno, que permite al jugador no sufrir los efectos de ser envenenado.
+Cuando son asesinados, tienen la posibilidad de dejar caer una o más de sus patas.
+Estas patas se pueden usar para crear pantalones que otorgan a su portador la capacidad de escalar paredes, además de una mayor defensa.
+También se pueden preparar con una esencia venenosa o un frasco con saliva de dragón de Komodo para crear una poción de resistencia al veneno, que permite a su usuario resistir los efectos del veneno.

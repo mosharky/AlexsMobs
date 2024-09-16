@@ -2,6 +2,7 @@ package com.github.alexthe666.alexsmobs.entity;
 
 import com.github.alexthe666.alexsmobs.config.AMConfig;
 import com.github.alexthe666.alexsmobs.effect.AMEffectRegistry;
+import com.github.alexthe666.alexsmobs.entity.ai.AdvancedPathNavigateNoTeleport;
 import com.github.alexthe666.alexsmobs.entity.ai.GroundPathNavigatorWide;
 import com.github.alexthe666.alexsmobs.entity.ai.MovementControllerCustomCollisions;
 import com.github.alexthe666.alexsmobs.entity.util.Maths;
@@ -318,8 +319,7 @@ public class EntityRockyRoller extends Monster implements ICustomCollisions {
     }
 
     public boolean hurt(DamageSource dmg, float amount) {
-        if (!this.isMoving() && !dmg.is(DamageTypes.MAGIC) && dmg.getDirectEntity() instanceof LivingEntity) {
-            LivingEntity livingentity = (LivingEntity) dmg.getDirectEntity();
+        if (!this.isMoving() && !dmg.is(DamageTypes.MAGIC) && dmg.getDirectEntity() instanceof LivingEntity livingentity && !(livingentity instanceof EntityRockyRoller)) {
             if (!dmg.is(DamageTypes.EXPLOSION) && !livingentity.hurtMarked) {
                 livingentity.hurt(damageSources().thorns(this), 2.0F);
             }
@@ -451,10 +451,10 @@ public class EntityRockyRoller extends Monster implements ICustomCollisions {
         }
     }
 
-    static class Navigator extends GroundPathNavigatorWide {
+    static class Navigator extends AdvancedPathNavigateNoTeleport {
 
         public Navigator(Mob mob, Level world) {
-            super(mob, world, 0.75F);
+            super(mob, world, true);
         }
 
         protected PathFinder createPathFinder(int i) {

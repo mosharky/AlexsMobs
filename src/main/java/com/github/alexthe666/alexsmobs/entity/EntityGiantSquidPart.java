@@ -14,8 +14,11 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
+
+import javax.annotation.Nullable;
 
 public class EntityGiantSquidPart extends PartEntity<EntityGiantSquid> implements IHurtableMultipart {
 
@@ -66,6 +69,12 @@ public class EntityGiantSquidPart extends PartEntity<EntityGiantSquid> implement
 
     public boolean isPickable() {
         return !collisionOnly;
+    }
+
+    @Nullable
+    public ItemStack getPickResult() {
+        Entity parent = this.getParent();
+        return parent != null ? parent.getPickResult() : ItemStack.EMPTY;
     }
 
     public boolean hurt(DamageSource source, float amount) {

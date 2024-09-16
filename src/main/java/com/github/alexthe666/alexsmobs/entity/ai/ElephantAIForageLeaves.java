@@ -11,8 +11,10 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class ElephantAIForageLeaves extends MoveToBlockGoal {
@@ -125,6 +127,13 @@ public class ElephantAIForageLeaves extends MoveToBlockGoal {
 
     @Override
     protected boolean isValidTarget(LevelReader worldIn, BlockPos pos) {
-        return !elephant.aiItemFlag && worldIn.getBlockState(pos).is(AMTagRegistry.ELEPHANT_FOODBLOCKS);
+        return !elephant.aiItemFlag && worldIn.getBlockState(pos).is(AMTagRegistry.ELEPHANT_FOODBLOCKS) && canSeeBlock(pos);
+    }
+
+    private boolean canSeeBlock(BlockPos destinationBlock) {
+        final Vec3 Vector3d = new Vec3(elephant.getX(), elephant.getEyeY(), elephant.getZ());
+        final Vec3 blockVec = net.minecraft.world.phys.Vec3.atCenterOf(destinationBlock);
+        final BlockHitResult result = elephant.level().clip(new ClipContext(Vector3d, blockVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, elephant));
+        return result.getBlockPos().equals(destinationBlock);
     }
 }

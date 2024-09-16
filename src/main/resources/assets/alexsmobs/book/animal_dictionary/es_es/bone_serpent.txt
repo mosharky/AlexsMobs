@@ -2,11 +2,6 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-La Serpiente Ósea es un gigante, criatura no muerta con forma de Serpiente que habita en los profundos lagos de lava del Nether.
-Ocasionalmente se lo puede ver saltando de la lava solo para desaparecer en ella otra vez, poco después. 
-La Serpiente Ósea no solo es hostil a exploradores, como lo es también el enemigo mortal de los esqueletos de Wither. 
-Siempre que la Serpiente Ósea haga objetivo a una criatura, saltará de la lava e intentará aplastar a su presa debajo de ella.
+La serpiente ósea es una gigantesca criatura muerta viviente que habita en los profundos lagos de lava del Nether. Ocasionalmente se le puede ver saltando de la lava para desaparecer poco después. La serpiente ósea no sólo es hostil a los exploradores, sino que también es el enemigo mortal de los esqueletos del Wither. Cuando la serpiente ósea elige una víctima, salta de la lava e intenta aplastar a su presa debajo de ella.
 
-Si es asesinado, La Serpiente Ósea explota dentro de sus montones de huesos, pero además puede dejar caer
-uno de sus Dientes. Cuando se fermenta con un frasco con lava, se puede crear una Poción de visión de lava, 
-que permite ver a uno a través de la lava como si fuera agua.
+Si es asesinada, la serpiente ósea explota en montones de huesos, aunque también puede dejar caer uno de sus dientes. Cuando se usa como ingrediente sobre un frasco con lava, se puede preparar una poción de visión de lava, que permite ver a través de la lava como si se tratara de agua.

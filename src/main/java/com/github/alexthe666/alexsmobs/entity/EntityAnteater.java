@@ -2,7 +2,6 @@ package com.github.alexthe666.alexsmobs.entity;
 
 import com.github.alexthe666.alexsmobs.config.AMConfig;
 import com.github.alexthe666.alexsmobs.entity.ai.*;
-import com.github.alexthe666.alexsmobs.item.AMItemRegistry;
 import com.github.alexthe666.alexsmobs.misc.AMSoundRegistry;
 import com.github.alexthe666.alexsmobs.misc.AMTagRegistry;
 import com.github.alexthe666.citadel.animation.Animation;
@@ -34,7 +33,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
@@ -204,7 +202,7 @@ public class EntityAnteater extends Animal implements NeutralMob, IAnimatedEntit
 
     protected void customServerAiStep() {
         if (!this.level().isClientSide) {
-            this.updatePersistentAnger((ServerLevel)this.level(), false);
+            this.updatePersistentAnger((ServerLevel) this.level(), false);
         }
     }
 
@@ -442,7 +440,7 @@ public class EntityAnteater extends Animal implements NeutralMob, IAnimatedEntit
 
         @Override
         public boolean canUse() {
-            return  EntityAnteater.this.shouldTargetAnts() && !EntityAnteater.this.isBaby() && !EntityAnteater.this.hasAntOnTongue() && !EntityAnteater.this.isStanding() && super.canUse();
+            return EntityAnteater.this.shouldTargetAnts() && !EntityAnteater.this.isBaby() && !EntityAnteater.this.hasAntOnTongue() && !EntityAnteater.this.isStanding() && super.canUse();
         }
 
         @Override
@@ -463,28 +461,29 @@ public class EntityAnteater extends Animal implements NeutralMob, IAnimatedEntit
 
         public void tick() {
             final LivingEntity enemy = EntityAnteater.this.getTarget();
-            final double attackReachSqr = this.getAttackReachSqr(enemy);
-            final double distToEnemySqr = EntityAnteater.this.distanceTo(enemy);
-            EntityAnteater.this.lookAt(enemy, 100, 5);
-            if (enemy instanceof EntityLeafcutterAnt) {
-                if (distToEnemySqr <= attackReachSqr + 1.5F) {
-                    EntityAnteater.this.setAnimation(ANIMATION_TOUNGE_IDLE);
-                } else {
-                    EntityAnteater.this.lookAt(enemy, 5, 5);
-                }
-                EntityAnteater.this.getNavigation().moveTo(enemy, 1.0D);
-            } else {
-                if (distToEnemySqr <= attackReachSqr) {
+            if (enemy != null) {
+                final double attackReachSqr = this.getAttackReachSqr(enemy);
+                final double distToEnemySqr = EntityAnteater.this.distanceTo(enemy);
+                EntityAnteater.this.lookAt(enemy, 100, 5);
+                if (enemy instanceof EntityLeafcutterAnt) {
+                    if (distToEnemySqr <= attackReachSqr + 1.5F) {
+                        EntityAnteater.this.setAnimation(ANIMATION_TOUNGE_IDLE);
+                    } else {
+                        EntityAnteater.this.lookAt(enemy, 5, 5);
+                    }
                     EntityAnteater.this.getNavigation().moveTo(enemy, 1.0D);
-                    EntityAnteater.this.setAnimation(EntityAnteater.this.getRandom().nextBoolean() ? ANIMATION_SLASH_L : ANIMATION_SLASH_R);
+                } else {
+                    if (distToEnemySqr <= attackReachSqr) {
+                        EntityAnteater.this.getNavigation().moveTo(enemy, 1.0D);
+                        EntityAnteater.this.setAnimation(EntityAnteater.this.getRandom().nextBoolean() ? ANIMATION_SLASH_L : ANIMATION_SLASH_R);
+                    }
+                    final double x = enemy.getX() - EntityAnteater.this.getX();
+                    final double z = enemy.getZ() - EntityAnteater.this.getZ();
+                    final float f = (float) (Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90.0F;
+                    EntityAnteater.this.setYRot(f);
+                    EntityAnteater.this.yBodyRot = f;
+                    EntityAnteater.this.setStanding(true);
                 }
-                final double x = enemy.getX() - EntityAnteater.this.getX();
-                final double z = enemy.getZ() - EntityAnteater.this.getZ();
-//                double d3 = (double)Mth.sqrt((float) (x * x + z * z));
-                final float f = (float) (Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90.0F;
-                EntityAnteater.this.setYRot(f);
-                EntityAnteater.this.yBodyRot = f;
-                EntityAnteater.this.setStanding(true);
             }
         }
 

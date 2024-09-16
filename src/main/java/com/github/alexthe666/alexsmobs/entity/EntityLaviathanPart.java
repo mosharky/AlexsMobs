@@ -10,8 +10,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.entity.PartEntity;
+
+import javax.annotation.Nullable;
 
 public class EntityLaviathanPart extends PartEntity<EntityLaviathan> {
 
@@ -47,15 +50,23 @@ public class EntityLaviathanPart extends PartEntity<EntityLaviathan> {
     }
 
     public boolean canBeCollidedWith() {
-        return true;
+        return false;
     }
 
     protected void collideWithEntity(Entity entityIn) {
-        entityIn.push(this);
+        if(!(entityIn instanceof EntityLaviathan)){
+            entityIn.push(this);
+        }
     }
 
     public boolean isPickable() {
         return true;
+    }
+
+    @Nullable
+    public ItemStack getPickResult() {
+        Entity parent = this.getParent();
+        return parent != null ? parent.getPickResult() : ItemStack.EMPTY;
     }
 
     public boolean hurt(DamageSource source, float amount) {

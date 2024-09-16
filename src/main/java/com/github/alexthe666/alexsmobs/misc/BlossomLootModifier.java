@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -56,9 +55,9 @@ public class BlossomLootModifier implements IGlobalLootModifier {
                 }
             }
             int bonusLevel = ctxTool != null ? EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, ctxTool) : 0;
-            int bananaStep = (int) Math.min(AMConfig.blossomChance * 0.1F, 0);
-            int bananaRarity = AMConfig.blossomChance - (bonusLevel * bananaStep);
-            if (bananaRarity < 1 || random.nextInt(bananaRarity) == 0) {
+            int blossomStep = (int) Math.floor(AMConfig.acaciaBlossomChance * 0.1F);
+            int blossomRarity = AMConfig.acaciaBlossomChance - (bonusLevel * blossomStep);
+            if (blossomRarity < 1 || random.nextInt(blossomRarity) == 0) {
                 generatedLoot.add(new ItemStack(AMItemRegistry.ACACIA_BLOSSOM.get()));
             }
         }

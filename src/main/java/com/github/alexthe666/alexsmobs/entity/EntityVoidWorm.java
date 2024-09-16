@@ -340,6 +340,7 @@ public class EntityVoidWorm extends Monster {
                         scale = scale * 0.85F;
                     }
                     EntityVoidWormPart part = new EntityVoidWormPart(AMEntityRegistry.VOID_WORM_PART.get(), partParent,  1.0F + (scale * (tail ? 0.65F : 0.3F)) + (i == 0 ? 0.8F : 0), 180, i == 0 ? -0.0F : i == segments - tailstart ? -0.3F : 0);
+                    part.setInvulnerable(partParent.isInvulnerable());
                     part.setParent(partParent);
                     if (updatePostSummon) {
                         part.setPortalTicks(i * 2);
@@ -378,10 +379,14 @@ public class EntityVoidWorm extends Monster {
         }
     }
 
-    public void setMaxHealth(double maxHealth, boolean heal){
+    public double getBaseMaxHealth() {
+        return this.getAttributeBaseValue(Attributes.MAX_HEALTH);
+    }
+
+    public void setBaseMaxHealth(double maxHealth, boolean heal){
         this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(maxHealth);
         if(heal){
-            this.heal((float)maxHealth);
+            this.heal(this.getMaxHealth());
         }
     }
 
@@ -471,7 +476,7 @@ public class EntityVoidWorm extends Monster {
             reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         this.setSegmentCount(25 + random.nextInt(15));
         this.setXRot(0.0F);
-        this.setMaxHealth(AMConfig.voidWormMaxHealth, true);
+        this.setBaseMaxHealth(AMConfig.voidWormMaxHealth, true);
         return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 

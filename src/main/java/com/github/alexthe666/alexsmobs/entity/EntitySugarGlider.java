@@ -302,8 +302,10 @@ public class EntitySugarGlider extends TamableAnimal implements IFollower {
                     if (lootList.size() > 0) {
                         for (ItemStack stack : lootList) {
                             ItemEntity e = this.spawnAtLocation(stack.copy());
-                            e.hasImpulse = true;
-                            e.setDeltaMovement(e.getDeltaMovement().multiply(0.2, 0.2, 0.2));
+                            if(e != null){
+                                e.hasImpulse = true;
+                                e.setDeltaMovement(e.getDeltaMovement().multiply(0.2, 0.2, 0.2));
+                            }
                         }
                     }
                 }

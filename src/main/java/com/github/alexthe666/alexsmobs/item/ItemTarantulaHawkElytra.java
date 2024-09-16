@@ -32,16 +32,7 @@ public class ItemTarantulaHawkElytra extends ArmorItem {
     }
 
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-        ItemStack itemstack = playerIn.getItemInHand(handIn);
-        EquipmentSlot equipmentslottype = Mob.getEquipmentSlotForItem(itemstack);
-        ItemStack itemstack1 = playerIn.getItemBySlot(equipmentslottype);
-        if (itemstack1.isEmpty()) {
-            playerIn.setItemSlot(equipmentslottype, itemstack.copy());
-            itemstack.setCount(0);
-            return InteractionResultHolder.sidedSuccess(itemstack, worldIn.isClientSide());
-        } else {
-            return InteractionResultHolder.fail(itemstack);
-        }
+        return super.use(worldIn, playerIn, handIn);
     }
 
     @Override

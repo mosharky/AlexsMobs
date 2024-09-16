@@ -1,6 +1,8 @@
 package com.github.alexthe666.alexsmobs;
 
+import com.github.alexthe666.alexsmobs.config.AMConfig;
 import com.github.alexthe666.alexsmobs.misc.CapsidRecipeManager;
+import com.github.alexthe666.citadel.server.entity.pathfinding.raycoms.PathfindingConstants;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -91,5 +93,10 @@ public class CommonProxy {
 
     public int getSingingBlueJayId() {
         return -1;
+    }
+
+    public void initPathfinding() {
+        //PathfindingConstants.isDebugMode = true;
+        PathfindingConstants.pathfindingThreads = Math.max(PathfindingConstants.pathfindingThreads, AMConfig.pathfindingThreads);
     }
 }

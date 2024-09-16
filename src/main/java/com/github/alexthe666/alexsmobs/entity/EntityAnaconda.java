@@ -601,7 +601,6 @@ public class EntityAnaconda extends Animal implements ISemiAquatic {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    // snake.lookAt(target, 1, 1);
                 }
             }
         }

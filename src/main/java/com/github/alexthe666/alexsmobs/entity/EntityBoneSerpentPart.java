@@ -65,6 +65,12 @@ public class EntityBoneSerpentPart extends LivingEntity implements IHurtableMult
         return false;
     }
 
+    @Nullable
+    public ItemStack getPickResult() {
+        Entity parent = this.getParent();
+        return parent != null ? parent.getPickResult() : ItemStack.EMPTY;
+    }
+
     public static AttributeSupplier.Builder bakeAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 10.0D).add(Attributes.MOVEMENT_SPEED, 0.15F);
     }

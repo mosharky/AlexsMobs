@@ -42,20 +42,22 @@ public class MessageTarantulaHawkSting {
 
         public static void handle(MessageTarantulaHawkSting message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
 
-            if (player != null) {
-                if (player.level() != null) {
-                    Entity entity = player.level().getEntity(message.hawk);
-                    Entity spider = player.level().getEntity(message.spider);
-                    if (entity instanceof EntityTarantulaHawk && spider instanceof LivingEntity && ((LivingEntity) spider).getMobType() == MobType.ARTHROPOD) {
-                        ((LivingEntity) spider).addEffect(new MobEffectInstance(AMEffectRegistry.DEBILITATING_STING.get(), EntityTarantulaHawk.STING_DURATION));
+                if (player != null) {
+                    if (player.level() != null) {
+                        Entity entity = player.level().getEntity(message.hawk);
+                        Entity spider = player.level().getEntity(message.spider);
+                        if (entity instanceof EntityTarantulaHawk && spider instanceof LivingEntity && ((LivingEntity) spider).getMobType() == MobType.ARTHROPOD) {
+                            ((LivingEntity) spider).addEffect(new MobEffectInstance(AMEffectRegistry.DEBILITATING_STING.get(), EntityTarantulaHawk.STING_DURATION));
+                        }
                     }
                 }
-            }
+            });
         }
     }
 }

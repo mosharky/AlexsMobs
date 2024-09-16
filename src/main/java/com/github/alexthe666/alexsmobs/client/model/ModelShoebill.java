@@ -15,95 +15,124 @@ public class ModelShoebill extends AdvancedEntityModel<EntityShoebill> {
     private final AdvancedModelBox root;
     private final AdvancedModelBox body;
     private final AdvancedModelBox tail;
-    private final AdvancedModelBox wing_left;
-    private final AdvancedModelBox wing_right;
-    private final AdvancedModelBox wing_right_pivot;
-    private final AdvancedModelBox wing_left_pivot;
-    private final AdvancedModelBox leg_left;
-    private final AdvancedModelBox leg_right;
-    private final AdvancedModelBox neck;
+    private final AdvancedModelBox leftWing;
+    private final AdvancedModelBox leftWingFeathers;
+    private final AdvancedModelBox rightWing;
+    private final AdvancedModelBox rightWingFeathers;
+    private final AdvancedModelBox leftLeg;
+    private final AdvancedModelBox leftFoot;
+    private final AdvancedModelBox rightLeg;
+    private final AdvancedModelBox rightFoot;
+    private final AdvancedModelBox headPivot;
     private final AdvancedModelBox head;
-    private final AdvancedModelBox crest;
+    private final AdvancedModelBox backHair;
+    private final AdvancedModelBox hair_r1;
     private final AdvancedModelBox beak;
     private final AdvancedModelBox jaw;
-    public ModelAnimator animator;
+    private final AdvancedModelBox jaw_r1;
+    private final ModelAnimator animator;
 
     public ModelShoebill() {
-        texWidth = 64;
-        texHeight = 64;
+        texWidth = 128;
+        texHeight = 128;
 
-        root = new AdvancedModelBox(this, "root");
-        root.setPos(0.0F, 24.0F, 0.0F);
+        root = new AdvancedModelBox(this);
+        root.setRotationPoint(0.0F, 24.0F, 0.0F);
 
 
-        body = new AdvancedModelBox(this, "body");
-        body.setPos(0.0F, -14.0F, 0.0F);
+        body = new AdvancedModelBox(this);
+        body.setRotationPoint(0.0F, -17.0F, 2.0F);
         root.addChild(body);
-        setRotationAngle(body, 0.9599F, 0.0F, 0.0F);
-        body.setTextureOffset(0, 15).addBox(-2.5F, -5.0F, -2.0F, 5.0F, 10.0F, 5.0F, 0.0F, false);
+        setRotationAngle(body, -0.9599F, 0.0F, 0.0F);
+        body.setTextureOffset(0, 0).addBox(-4.0F, -3.0F, -7.0F, 8.0F, 6.0F, 13.0F, 0.0F, false);
 
-        tail = new AdvancedModelBox(this, "tail");
-        tail.setPos(0.0F, 5.0F, 2.5F);
+        tail = new AdvancedModelBox(this);
+        tail.setRotationPoint(0.0F, -2.0F, 6.0F);
         body.addChild(tail);
-        setRotationAngle(tail, -0.3054F, 0.0F, 0.0F);
-        tail.setTextureOffset(0, 31).addBox(-2.0F, 0.0F, -3.0F, 4.0F, 5.0F, 3.0F, 0.0F, false);
+        tail.setTextureOffset(42, 27).addBox(-3.0F, -1.0F, 0.0F, 6.0F, 2.0F, 9.0F, 0.0F, false);
 
-        wing_left_pivot = new AdvancedModelBox(this, "wing_left_pivot");
-        wing_left_pivot.setPos(2.5F, -4.0F, 1.0F);
-        body.addChild(wing_left_pivot);
+        leftWing = new AdvancedModelBox(this);
+        leftWing.setRotationPoint(4.0F, 0.3F, -3.4F);
+        body.addChild(leftWing);
+        leftWing.setTextureOffset(0, 20).addBox(-1.0F, -3.0F, -2.0F, 2.0F, 6.0F, 13.0F, 0.0F, false);
+
+        leftWingFeathers = new AdvancedModelBox(this);
+        leftWingFeathers.setRotationPoint(0.0F, 0.0F, 9.0F);
+        leftWing.addChild(leftWingFeathers);
+        leftWingFeathers.setTextureOffset(31, 8).addBox(0.2F, -4.0F, -3.0F, 0.0F, 6.0F, 12.0F, 0.0F, false);
+
+        rightWing = new AdvancedModelBox(this);
+        rightWing.setRotationPoint(-4.0F, 0.3F, -3.4F);
+        body.addChild(rightWing);
+        rightWing.setTextureOffset(0, 20).addBox(-1.0F, -3.0F, -2.0F, 2.0F, 6.0F, 13.0F, 0.0F, true);
+
+        rightWingFeathers = new AdvancedModelBox(this);
+        rightWingFeathers.setRotationPoint(0.0F, 0.0F, 9.0F);
+        rightWing.addChild(rightWingFeathers);
+        rightWingFeathers.setTextureOffset(31, 8).addBox(-0.2F, -4.0F, -3.0F, 0.0F, 6.0F, 12.0F, 0.0F, true);
+
+        leftLeg = new AdvancedModelBox(this);
+        leftLeg.setRotationPoint(2.5F, 3.0F, 4.0F);
+        body.addChild(leftLeg);
+        setRotationAngle(leftLeg, 0.9599F, 0.0F, 0.0F);
+        leftLeg.setTextureOffset(18, 20).addBox(-1.5F, 0.0F, 0.0F, 3.0F, 12.0F, 0.0F, 0.0F, false);
+
+        leftFoot = new AdvancedModelBox(this);
+        leftFoot.setRotationPoint(0.0F, 12.0F, 0.0F);
+        leftLeg.addChild(leftFoot);
+        leftFoot.setTextureOffset(30, 0).addBox(-2.5F, 0.0F, -3.0F, 5.0F, 0.0F, 5.0F, 0.0F, false);
+
+        rightLeg = new AdvancedModelBox(this);
+        rightLeg.setRotationPoint(-2.5F, 3.0F, 4.0F);
+        body.addChild(rightLeg);
+        setRotationAngle(rightLeg, 0.9599F, 0.0F, 0.0F);
+        rightLeg.setTextureOffset(18, 20).addBox(-1.5F, 0.0F, 0.0F, 3.0F, 12.0F, 0.0F, 0.0F, true);
+
+        rightFoot = new AdvancedModelBox(this);
+        rightFoot.setRotationPoint(0.0F, 12.0F, 0.0F);
+        rightLeg.addChild(rightFoot);
+        rightFoot.setTextureOffset(30, 0).addBox(-2.5F, 0.0F, -3.0F, 5.0F, 0.0F, 5.0F, 0.0F, true);
+
+        headPivot = new AdvancedModelBox(this);
+        headPivot.setRotationPoint(0.0F, 1.0F, -4.0F);
+        setRotationAngle(headPivot, -0.6109F, 0.0F, 0.0F);
+        body.addChild(headPivot);
+
+        head = new AdvancedModelBox(this);
+        head.setRotationPoint(0.0F, 0.0F, 0.0F);
+        headPivot.addChild(head);
+        head.setTextureOffset(20, 29).addBox(-2.5F, -3.0F, -11.0F, 5.0F, 5.0F, 11.0F, 0.0F, false);
+        head.setTextureOffset(34, 47).addBox(-2.5F, 2.0F, -11.0F, 5.0F, 1.0F, 1.0F, 0.0F, false);
+        head.setTextureOffset(0, 0).addBox(0.0F, -6.0F, -12.0F, 0.0F, 6.0F, 5.0F, 0.0F, false);
+
+        backHair = new AdvancedModelBox(this);
+        backHair.setRotationPoint(0.0F, -3.0F, -10.0F);
+        head.addChild(backHair);
 
 
-        wing_left = new AdvancedModelBox(this, "wing_left");
-        wing_left_pivot.addChild(wing_left);
-        wing_left.setTextureOffset(21, 21).addBox(0.0F, 0.0F, -4.0F, 1.0F, 12.0F, 6.0F, 0.0F, false);
+        hair_r1 = new AdvancedModelBox(this);
+        hair_r1.setRotationPoint(0.0F, 0.0F, -1.0F);
+        backHair.addChild(hair_r1);
+        setRotationAngle(hair_r1, -0.5236F, 0.0F, 0.0F);
+        hair_r1.setTextureOffset(30, 6).addBox(-2.5F, -5.0F, 0.0F, 5.0F, 5.0F, 0.0F, 0.0F, false);
 
-        wing_right_pivot = new AdvancedModelBox(this, "wing_right_pivot");
-        wing_right_pivot.setPos(-2.5F, -4.0F, 1.0F);
-        body.addChild(wing_right_pivot);
-
-        wing_right = new AdvancedModelBox(this, "wing_right");
-        wing_right_pivot.addChild(wing_right);
-        wing_right.setTextureOffset(21, 21).addBox(-1.0F, 0.0F, -4.0F, 1.0F, 12.0F, 6.0F, 0.0F, true);
-
-        leg_left = new AdvancedModelBox(this, "leg_left");
-        leg_left.setPos(2.0F, 2.3F, -2.0F);
-        body.addChild(leg_left);
-        setRotationAngle(leg_left, 0.6109F, 0.0F, 0.0F);
-        leg_left.setTextureOffset(0, 0).addBox(-2.0F, -3.0F, -11.0F, 3.0F, 3.0F, 11.0F, 0.0F, false);
-
-        leg_right = new AdvancedModelBox(this, "leg_right");
-        leg_right.setPos(-2.0F, 2.3F, -2.0F);
-        body.addChild(leg_right);
-        setRotationAngle(leg_right, 0.6109F, 0.0F, 0.0F);
-        leg_right.setTextureOffset(0, 0).addBox(-1.0F, -3.0F, -11.0F, 3.0F, 3.0F, 11.0F, 0.0F, true);
-
-        neck = new AdvancedModelBox(this, "neck");
-        neck.setPos(0.0F, -4.8F, 1.0F);
-        body.addChild(neck);
-        setRotationAngle(neck, -0.7418F, 0.0F, 0.0F);
-        neck.setTextureOffset(35, 0).addBox(-1.5F, -4.0F, -1.5F, 3.0F, 5.0F, 3.0F, 0.0F, false);
-
-        head = new AdvancedModelBox(this, "head");
-        head.setPos(0.0F, -3.8F, -0.3F);
-        neck.addChild(head);
-        head.setTextureOffset(25, 11).addBox(-2.0F, -3.0F, -2.0F, 4.0F, 3.0F, 4.0F, 0.0F, false);
-
-        crest = new AdvancedModelBox(this, "crest");
-        crest.setPos(0.0F, -2.0F, 2.0F);
-        head.addChild(crest);
-        crest.setTextureOffset(0, 0).addBox(0.0F, -2.0F, -2.0F, 0.0F, 4.0F, 4.0F, 0.0F, false);
-
-        beak = new AdvancedModelBox(this, "beak");
-        beak.setPos(0.0F, -2.9F, -2.0F);
+        beak = new AdvancedModelBox(this);
+        beak.setRotationPoint(0.0F, 2.0F, -9.0F);
         head.addChild(beak);
-        setRotationAngle(beak, 0.3491F, 0.0F, 0.0F);
-        beak.setTextureOffset(18, 0).addBox(-1.5F, 0.0F, -5.0F, 3.0F, 2.0F, 5.0F, 0.0F, false);
+        setRotationAngle(beak, 0.3927F, 0.0F, 0.0F);
+        beak.setTextureOffset(0, 40).addBox(-3.0F, -1.0F, 0.0F, 6.0F, 8.0F, 3.0F, 0.0F, false);
+        beak.setTextureOffset(6, 0).addBox(-1.0F, 7.0F, 3.0F, 2.0F, 0.0F, 1.0F, 0.0F, false);
 
-        jaw = new AdvancedModelBox(this, "jaw");
-        jaw.setPos(0.0F, 2.0F, 0.0F);
+        jaw = new AdvancedModelBox(this);
+        jaw.setRotationPoint(0.0F, 1.0F, 3.0F);
         beak.addChild(jaw);
-        setRotationAngle(jaw, -0.1745F, 0.0F, 0.0F);
-        jaw.setTextureOffset(41, 36).addBox(-1.5F, 0.0F, -5.0F, 3.0F, 1.0F, 5.0F, -0.1F, false);
+
+
+        jaw_r1 = new AdvancedModelBox(this);
+        jaw_r1.setRotationPoint(0.0F, 0.0F, 0.3F);
+        jaw.addChild(jaw_r1);
+        setRotationAngle(jaw_r1, -0.1745F, 0.0F, 0.0F);
+        jaw_r1.setTextureOffset(0, 20).addBox(-2.5F, -1.4F, -0.3F, 5.0F, 7.0F, 1.0F, -0.03F, false);
         this.updateDefaultPose();
         animator = new ModelAnimator();
     }
@@ -113,61 +142,46 @@ public class ModelShoebill extends AdvancedEntityModel<EntityShoebill> {
         animator.update(entity);
         animator.setAnimation(EntityShoebill.ANIMATION_FISH);
         animator.startKeyframe(15);
-        animator.rotate(neck, Maths.rad(-40), 0, 0);
-        animator.rotate(head, Maths.rad(40), 0, 0);
+        animator.rotate(head, Maths.rad(-40), 0, 0);
         animator.move(head, 0, 0.5F, 0);
         animator.endKeyframe();
         animator.startKeyframe(5);
         animator.rotate(body, Maths.rad(40), 0, 0);
-        animator.rotate(leg_left, Maths.rad(-40), 0, 0);
-        animator.rotate(leg_right, Maths.rad(-40), 0, 0);
-        animator.rotate(neck, Maths.rad(70), 0, 0);
-        animator.rotate(head, Maths.rad(-50), 0, 0);
+        animator.rotate(leftLeg, Maths.rad(-40), 0, 0);
+        animator.rotate(rightLeg, Maths.rad(-40), 0, 0);
+        animator.rotate(head, Maths.rad(80), 0, 0);
         animator.rotate(jaw, Maths.rad(20), 0, 0);
         animator.move(body, 0, 1F, 0);
-        animator.move(neck, 0, 0, -3F);
         animator.move(head, 0, 0F, -2F);
         animator.endKeyframe();
         animator.setStaticKeyframe(3);
         animator.resetKeyframe(5);
         animator.setAnimation(EntityShoebill.ANIMATION_BEAKSHAKE);
         animator.startKeyframe(4);
-        animator.rotate(crest, Maths.rad(-20), 0, 0);
-        animator.rotate(neck, Maths.rad(-40), Maths.rad(10), 0);
         animator.rotate(head, Maths.rad(40), Maths.rad(40), 0);
         animator.move(head, 0, 0.5F, 0);
         animator.endKeyframe();
         animator.startKeyframe(4);
-        animator.rotate(crest, Maths.rad(30), 0, 0);
-        animator.rotate(neck, Maths.rad(-40), Maths.rad(-10), 0);
         animator.rotate(head, Maths.rad(40), Maths.rad(-40), 0);
         animator.move(head, 0, 0.5F, 0);
         animator.endKeyframe();
         animator.startKeyframe(4);
-        animator.rotate(crest, Maths.rad(30), 0, 0);
-        animator.rotate(neck, Maths.rad(-40), Maths.rad(10), 0);
         animator.rotate(head, Maths.rad(40), Maths.rad(40), 0);
         animator.move(head, 0, 0.5F, 0);
         animator.endKeyframe();
         animator.startKeyframe(4);
-        animator.rotate(crest, Maths.rad(30), 0, 0);
-        animator.rotate(neck, Maths.rad(-40), Maths.rad(-10), 0);
         animator.rotate(head, Maths.rad(40), Maths.rad(-40), 0);
         animator.move(head, 0, 0.5F, 0);
         animator.endKeyframe();
         animator.resetKeyframe(4);
         animator.setAnimation(EntityShoebill.ANIMATION_ATTACK);
         animator.startKeyframe(5);
-        animator.rotate(crest, Maths.rad(-20), 0, 0);
-        animator.rotate(neck, Maths.rad(-40), 0, 0);
-        animator.rotate(head, Maths.rad(40), 0, 0);
+        animator.rotate(head, Maths.rad(-20), 0, 0);
         animator.rotate(jaw, Maths.rad(30), 0, 0);
         animator.move(head, 0, 0.5F, 0);
-        animator.move(crest, 0, -0.5F, 0);
         animator.endKeyframe();
         animator.startKeyframe(5);
-        animator.rotate(neck, Maths.rad(70), 0, 0);
-        animator.rotate(head, Maths.rad(-80), 0, 0);
+        animator.rotate(head, Maths.rad(60), 0, 0);
         animator.rotate(jaw, Maths.rad(5), 0, 0);
         animator.endKeyframe();
         animator.resetKeyframe(5);
@@ -186,7 +200,7 @@ public class ModelShoebill extends AdvancedEntityModel<EntityShoebill> {
 
     @Override
     public Iterable<AdvancedModelBox> getAllParts() {
-        return ImmutableList.of(root, body, leg_left, leg_right, wing_left, wing_right, tail, head, neck, crest, beak, jaw, wing_left_pivot, wing_right_pivot);
+        return ImmutableList.of(root, body, leftLeg, rightLeg, leftWing, rightWing, tail, headPivot, head, beak, jaw, backHair, leftFoot, rightFoot, hair_r1, jaw_r1, leftWingFeathers, rightWingFeathers);
     }
 
     @Override
@@ -203,44 +217,41 @@ public class ModelShoebill extends AdvancedEntityModel<EntityShoebill> {
         float scaledLimbSwing = Math.min(1.0F, limbSwingAmount * 1.6F);
         float runProgress = Math.max(5F * scaledLimbSwing - flyProgress, 0);
         progressRotationPrev(body, runProgress, Maths.rad(25), 0, 0, 5F);
-        progressRotationPrev(leg_right, runProgress, Maths.rad(-25), 0, 0, 5F);
-        progressRotationPrev(leg_left, runProgress, Maths.rad(-25), 0, 0, 5F);
-        progressRotationPrev(neck, runProgress, Maths.rad(-55), 0, 0, 5F);
-        progressRotationPrev(head, runProgress, Maths.rad(10), 0, 0, 5F);
+        progressRotationPrev(rightLeg, runProgress, Maths.rad(-25), 0, 0, 5F);
+        progressRotationPrev(leftLeg, runProgress, Maths.rad(-25), 0, 0, 5F);
+        progressRotationPrev(head, runProgress, Maths.rad(-30), 0, 0, 5F);
         progressRotationPrev(body, flyProgress, Maths.rad(35), 0, 0, 5F);
-        progressRotationPrev(leg_right, flyProgress, Maths.rad(25), 0, 0, 5F);
-        progressRotationPrev(leg_left, flyProgress, Maths.rad(25), 0, 0, 5F);
-        progressRotationPrev(wing_right, flyProgress, 0, Maths.rad(90), Maths.rad(80), 5F);
-        progressRotationPrev(wing_left, flyProgress, 0, Maths.rad(-90), Maths.rad(-80), 5F);
-        progressRotationPrev(neck, flyProgress, Maths.rad(-70), 0, 0, 5F);
-        progressRotationPrev(head, flyProgress, Maths.rad(30), 0, 0, 5F);
+        progressRotationPrev(rightLeg, flyProgress, Maths.rad(25), 0, 0, 5F);
+        progressRotationPrev(leftLeg, flyProgress, Maths.rad(25), 0, 0, 5F);
+        progressRotationPrev(rightFoot, flyProgress, Maths.rad(25), 0, 0, 5F);
+        progressRotationPrev(leftFoot, flyProgress, Maths.rad(25), 0, 0, 5F);
+        progressRotationPrev(rightWing, flyProgress, Maths.rad(90), 0, Maths.rad(-80), 5F);
+        progressRotationPrev(leftWing, flyProgress, Maths.rad(90), 0, Maths.rad(80), 5F);
+        progressRotationPrev(head, flyProgress, Maths.rad(-20), 0, 0, 5F);
         progressRotationPrev(tail, flyProgress, Maths.rad(10), 0, 0, 5F);
-        progressPositionPrev(wing_right_pivot, flyProgress, 1F, 4F, 0, 5f);
-        progressPositionPrev(wing_left_pivot, flyProgress, -1F, 4F, 0, 5f);
-        progressPositionPrev(leg_right, flyProgress, 0, -1F, 0, 5f);
-        progressPositionPrev(leg_left, flyProgress, 0, -1F, 0, 5f);
+        progressPositionPrev(rightLeg, flyProgress, 0, -1F, 0, 5f);
+        progressPositionPrev(leftLeg, flyProgress, 0, -1F, 0, 5f);
         progressPositionPrev(body, flyProgress, 0, 5F, 0, 5f);
         progressPositionPrev(head, flyProgress, 0, 1.5F, 0, 5f);
 
-        this.walk(neck, idleSpeed, idleDegree, false, 1F, 0F, ageInTicks, 1);
-        this.walk(head, -idleSpeed, idleDegree, false, 2F, 0F, ageInTicks, 1);
+        this.walk(head, -idleSpeed, idleDegree * 0.2F, false, 2F, 0F, ageInTicks, 1);
         this.flap(tail, idleSpeed * 2F, idleDegree * 0.5F, true, 0F, 0F, ageInTicks, 1);
         if(flyProgress > 0){
-            this.walk(leg_right, walkSpeed, walkDegree * 0.2F, false, 0F, 0F, limbSwing, limbSwingAmount);
-            this.walk(leg_left, walkSpeed, walkDegree * 0.2F, true, 0F, 0F, limbSwing, limbSwingAmount);
-            this.swing(wing_right_pivot, flapSpeed, flapDegree * 5, true, 0F, 0F, ageInTicks, 1);
-            this.swing(wing_left_pivot, flapSpeed, flapDegree * 5, false, 0F, 0F, ageInTicks, 1);
-            this.walk(neck, flapSpeed, flapDegree * 0.85F, false, 0F, 0.2F, ageInTicks, 1);
+            this.walk(rightLeg, walkSpeed, walkDegree * 0.2F, false, 0F, 0F, limbSwing, limbSwingAmount);
+            this.walk(leftLeg, walkSpeed, walkDegree * 0.2F, true, 0F, 0F, limbSwing, limbSwingAmount);
+            this.flap(rightWing, flapSpeed, flapDegree * 5, true, 0F, 0F, ageInTicks, 1);
+            this.flap(leftWing, flapSpeed, flapDegree * 5, false, 0F, 0F, ageInTicks, 1);
             this.walk(head, flapSpeed, flapDegree * 0.85F, true, 0F, 0F, ageInTicks, 1);
             this.bob(body, flapSpeed * 0.3F, flapDegree * 4, true, ageInTicks, 1);
         }else{
-            this.walk(leg_right, walkSpeed, walkDegree * 1.85F, false, 0F, 0F, limbSwing, limbSwingAmount);
-            this.walk(leg_left, walkSpeed, walkDegree * 1.85F, true, 0F, 0F, limbSwing, limbSwingAmount);
-            this.walk(neck, walkSpeed, walkDegree * 0.85F, false, 2F, 0.2F, limbSwing, limbSwingAmount);
+            this.walk(rightLeg, walkSpeed, walkDegree * 1.85F, false, 0F, 0F, limbSwing, limbSwingAmount);
+            this.walk(leftLeg, walkSpeed, walkDegree * 1.85F, true, 0F, 0F, limbSwing, limbSwingAmount);
+            this.walk(rightFoot, walkSpeed, walkDegree * 1.85F, true, 0F, 0F, limbSwing, limbSwingAmount);
+            this.walk(leftFoot, walkSpeed, walkDegree * 1.85F, false, 0F, 0F, limbSwing, limbSwingAmount);
             this.walk(head, walkSpeed, walkDegree * 0.85F, true, 2F, 0F, limbSwing, limbSwingAmount);
             this.walk(tail, walkSpeed * 0.5F, walkDegree * 0.15F, true, -2F, 0.2F, limbSwing, limbSwingAmount);
         }
-        this.head.rotateAngleY += netHeadYaw * Mth.DEG_TO_RAD;
+        this.head.rotateAngleZ += netHeadYaw * Mth.DEG_TO_RAD;
 
     }
 

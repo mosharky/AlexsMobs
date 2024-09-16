@@ -38,20 +38,22 @@ public class MessageCrowMountPlayer {
 
         public static void handle(MessageCrowMountPlayer message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
 
-            if (player != null) {
-                if (player.level() != null) {
-                    Entity entity = player.level().getEntity(message.rider);
-                    Entity mountEntity = player.level().getEntity(message.mount);
-                    if (entity instanceof EntityCrow && mountEntity instanceof Player && entity.distanceTo(mountEntity) < 16D) {
-                        entity.startRiding(mountEntity, true);
+                if (player != null) {
+                    if (player.level() != null) {
+                        Entity entity = player.level().getEntity(message.rider);
+                        Entity mountEntity = player.level().getEntity(message.mount);
+                        if (entity instanceof EntityCrow && mountEntity instanceof Player && entity.distanceTo(mountEntity) < 16D) {
+                            entity.startRiding(mountEntity, true);
+                        }
                     }
                 }
-            }
+            });
         }
     }
 }

@@ -41,25 +41,26 @@ public class MessageKangarooEat {
 
         public static void handle(MessageKangarooEat message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
 
-            if (player != null) {
-                if (player.level() != null) {
-                    Entity entity = player.level().getEntity(message.kangaroo);
-                    if(entity instanceof EntityKangaroo && ((EntityKangaroo) entity).kangarooInventory != null){
-                        EntityKangaroo kangaroo = (EntityKangaroo)entity;
-                        for (int i = 0; i < 7; i++) {
-                            double d2 = kangaroo.getRandom().nextGaussian() * 0.02D;
-                            double d0 = kangaroo.getRandom().nextGaussian() * 0.02D;
-                            double d1 = kangaroo.getRandom().nextGaussian() * 0.02D;
-                            entity.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, message.stack), entity.getX() + (double) (kangaroo.getRandom().nextFloat() * entity.getBbWidth()) - (double) entity.getBbWidth() * 0.5F, entity.getY() + entity.getBbHeight() * 0.5F + (double) (kangaroo.getRandom().nextFloat() * entity.getBbHeight() * 0.5F), entity.getZ() + (double) (kangaroo.getRandom().nextFloat() * entity.getBbWidth()) - (double) entity.getBbWidth() * 0.5F, d0, d1, d2);
+                if (player != null) {
+                    if (player.level() != null) {
+                        Entity entity = player.level().getEntity(message.kangaroo);
+                        if (entity instanceof EntityKangaroo kangaroo && ((EntityKangaroo) entity).kangarooInventory != null) {
+                            for (int i = 0; i < 7; i++) {
+                                double d2 = kangaroo.getRandom().nextGaussian() * 0.02D;
+                                double d0 = kangaroo.getRandom().nextGaussian() * 0.02D;
+                                double d1 = kangaroo.getRandom().nextGaussian() * 0.02D;
+                                entity.level().addParticle(new ItemParticleOption(ParticleTypes.ITEM, message.stack), entity.getX() + (double) (kangaroo.getRandom().nextFloat() * entity.getBbWidth()) - (double) entity.getBbWidth() * 0.5F, entity.getY() + entity.getBbHeight() * 0.5F + (double) (kangaroo.getRandom().nextFloat() * entity.getBbHeight() * 0.5F), entity.getZ() + (double) (kangaroo.getRandom().nextFloat() * entity.getBbWidth()) - (double) entity.getBbWidth() * 0.5F, d0, d1, d2);
+                            }
                         }
                     }
                 }
-            }
+            });
         }
     }
 }

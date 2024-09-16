@@ -37,14 +37,16 @@ public class MessageTransmuteFromMenu {
 
         public static void handle(MessageTransmuteFromMenu message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
-            if(player.getId() == message.playerId && player.containerMenu instanceof MenuTransmutationTable){
-                MenuTransmutationTable table = (MenuTransmutationTable) player.containerMenu;
-                table.transmute(player, message.choice);
-            }
+            context.get().enqueueWork(() -> {
+                Player player = context.get().getSender();
+                if (context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT) {
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
+                if (player.getId() == message.playerId && player.containerMenu instanceof MenuTransmutationTable) {
+                    MenuTransmutationTable table = (MenuTransmutationTable) player.containerMenu;
+                    table.transmute(player, message.choice);
+                }
+            });
         }
     }
 

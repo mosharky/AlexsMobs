@@ -38,20 +38,22 @@ public class MessageCrowDismount {
 
         public static void handle(MessageCrowDismount message, Supplier<NetworkEvent.Context> context) {
             context.get().setPacketHandled(true);
-            Player player = context.get().getSender();
-            if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
-                player = AlexsMobs.PROXY.getClientSidePlayer();
-            }
+            context.get().enqueueWork(() ->{
+                Player player = context.get().getSender();
+                if(context.get().getDirection().getReceptionSide() == LogicalSide.CLIENT){
+                    player = AlexsMobs.PROXY.getClientSidePlayer();
+                }
 
-            if (player != null) {
-                if (player.level() != null) {
-                    Entity entity = player.level().getEntity(message.rider);
-                    Entity mountEntity = player.level().getEntity(message.mount);
-                    if (entity instanceof EntityCrow && mountEntity != null) {
-                        entity.stopRiding();
+                if (player != null) {
+                    if (player.level() != null) {
+                        Entity entity = player.level().getEntity(message.rider);
+                        Entity mountEntity = player.level().getEntity(message.mount);
+                        if (entity instanceof EntityCrow && mountEntity != null) {
+                            entity.stopRiding();
+                        }
                     }
                 }
-            }
+            });
         }
     }
 }

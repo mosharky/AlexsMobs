@@ -377,6 +377,12 @@ public class EntityAnacondaPart extends LivingEntity implements IHurtableMultipa
         return true;
     }
 
+    @Nullable
+    public ItemStack getPickResult() {
+        Entity parent = this.getParent();
+        return parent != null ? parent.getPickResult() : ItemStack.EMPTY;
+    }
+
     public int getBodyIndex() {
         return this.entityData.get(BODYINDEX);
     }

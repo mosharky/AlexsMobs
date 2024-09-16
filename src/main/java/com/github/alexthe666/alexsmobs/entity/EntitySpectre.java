@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -108,7 +109,7 @@ public class EntitySpectre extends Animal implements FlyingAnimal {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return !source.is(DamageTypes.MAGIC) && !source.is(DamageTypes.FELL_OUT_OF_WORLD) && !source.isCreativePlayer() || super.isInvulnerableTo(source);
+        return !source.is(DamageTypes.MAGIC) && !source.is(DamageTypes.FELL_OUT_OF_WORLD) && !source.isCreativePlayer() && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) || super.isInvulnerableTo(source);
     }
 
     @Nullable

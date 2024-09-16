@@ -305,6 +305,8 @@ public class EntityVoidWormPart extends LivingEntity implements IHurtableMultipa
             if (this.getChild() instanceof EntityVoidWormPart) {
                 EntityVoidWormPart segment = (EntityVoidWormPart) this.getChild();
                 EntityVoidWorm worm2 = AMEntityRegistry.VOID_WORM.get().create(level());
+                worm2.setNoAi(worm.isNoAi());
+                worm2.setInvulnerable(worm.isInvulnerable());
                 worm2.copyPosition(this);
                 segment.copyPosition(this);
                 worm2.setChildId(segment.getUUID());
@@ -314,7 +316,7 @@ public class EntityVoidWormPart extends LivingEntity implements IHurtableMultipa
                     level().addFreshEntity(worm2);
                 }
                 worm2.setSplitter(true);
-                worm2.setMaxHealth(worm.getMaxHealth() / 2F, true);
+                worm2.setBaseMaxHealth(worm.getBaseMaxHealth() / 2F, true);
                 worm2.setSplitFromUuid(worm.getUUID());
                 worm2.setWormSpeed((float) Mth.clamp(worm.getWormSpeed() * 0.8, 0.4F, 1F));
                 worm2.resetWormScales();
@@ -372,6 +374,12 @@ public class EntityVoidWormPart extends LivingEntity implements IHurtableMultipa
     @Override
     public boolean isPickable() {
         return true;
+    }
+
+    @Nullable
+    public ItemStack getPickResult() {
+        Entity parent = this.getParent();
+        return parent != null ? parent.getPickResult() : ItemStack.EMPTY;
     }
 
     @Override

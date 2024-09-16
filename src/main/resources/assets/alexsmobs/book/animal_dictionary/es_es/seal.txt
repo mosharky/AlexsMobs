@@ -1,8 +1,8 @@
 <NEWLINE>
 <NEWLINE>
 <NEWLINE>
-Las Focas son en su mayoría mamíferos acuáticos que se pueden encontrar en las Playas y en los Icebergs del Overworld.
-Estas críaturas aparentemente perezosas a menudo suelen tomar el sol y duermen en cualquier arena o hielo que puedan encontrar.
-Cuando no descansa en tierra, la Foca es una nadadora extremadamente hábil, capaz de nadar en anillos alrededor de la mayoría de las otras especies acuáticas, a excepción de su último depredador: la Orca. Si una Foca es atacada,
-toda la manada intentará huir al agua, donde ellas son más ágiles. Alimentar a una Foca en tierra con tres peces, iniciará una forma primitiva de "comercio" entre una persona y la Foca: a cambio de los tres peces, 
-la Foca deborará en el fondo del mar en busca de un artículo para devolver. Aunque este artículo a menudo es basura sin valor como algas o arena, aveces pueden ser artículos mucho más raros, como Dientes de Tiburón, Escamas de Cocodrilo o Caparazón de Nautilos. Las Focas se pueden reproducir con colas de Langosta.
+Las focas son mamíferos principalmente acuáticos que se pueden encontrar en las playas y icebergs de la Superficie. Estas criaturas aparentemente perezosas a menudo toman el sol y duermen en cualquier arena o hielo que puedan encontrar.
+Cuando no está en tierra, la foca es una nadadora extremadamente hábil, capaz de nadar en anillos alrededor de la mayoría de las otras especies acuáticas, excepto su depredador máximo: la orca. Si una foca es atacada, toda la manada intentará huir al agua, donde son más ágiles.
+<NEWLINE>
+Alimentar con tres peces a una foca que descansa en la tierra iniciará una forma primitiva de "comercio" entre una persona y la foca: a cambio de los tres peces, la foca hurgará en el fondo del mar en busca de un objeto que entregar.
+Aunque suele ser basura sin valor como algas o arena, a veces pueden ser objetos mucho más raros, como dientes de tiburón, escamas o caparazones de nautilo. Las focas se pueden criar con colas de langosta.

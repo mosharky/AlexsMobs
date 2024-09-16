@@ -15,8 +15,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.entity.PartEntity;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class EntityCachalotPart extends PartEntity<EntityCachalotWhale> {
@@ -58,6 +60,12 @@ public class EntityCachalotPart extends PartEntity<EntityCachalotWhale> {
 
     public boolean isPickable() {
         return true;
+    }
+
+    @Nullable
+    public ItemStack getPickResult() {
+        Entity parent = this.getParent();
+        return parent != null ? parent.getPickResult() : ItemStack.EMPTY;
     }
 
     public boolean hurt(DamageSource source, float amount) {

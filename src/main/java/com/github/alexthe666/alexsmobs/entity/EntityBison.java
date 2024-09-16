@@ -1,6 +1,7 @@
 package com.github.alexthe666.alexsmobs.entity;
 
 import com.github.alexthe666.alexsmobs.config.AMConfig;
+import com.github.alexthe666.alexsmobs.entity.ai.AdvancedPathNavigateNoTeleport;
 import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIHurtByTargetNotBaby;
 import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIPanicBaby;
 import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIWanderRanged;
@@ -30,6 +31,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.monster.Monster;
@@ -170,6 +172,10 @@ public class EntityBison extends Animal implements IAnimatedEntity, Shearable, n
         compound.putBoolean("SnowPerm", this.permSnow);
         compound.putInt("ChargeCooldown", this.chargeCooldown);
         compound.putInt("Feedings", this.feedingsSinceLastShear);
+    }
+
+    protected PathNavigation createNavigation(Level worldIn) {
+        return new AdvancedPathNavigateNoTeleport(this, worldIn, true);
     }
 
     public void tick() {

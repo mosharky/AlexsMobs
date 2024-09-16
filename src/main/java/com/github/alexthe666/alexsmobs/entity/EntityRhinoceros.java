@@ -1,10 +1,7 @@
 package com.github.alexthe666.alexsmobs.entity;
 
 import com.github.alexthe666.alexsmobs.config.AMConfig;
-import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIHurtByTargetNotBaby;
-import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIPanicBaby;
-import com.github.alexthe666.alexsmobs.entity.ai.AnimalAIWanderRanged;
-import com.github.alexthe666.alexsmobs.entity.ai.GroundPathNavigatorWide;
+import com.github.alexthe666.alexsmobs.entity.ai.*;
 import com.github.alexthe666.alexsmobs.misc.AMSoundRegistry;
 import com.github.alexthe666.alexsmobs.misc.AMTagRegistry;
 import com.github.alexthe666.citadel.animation.Animation;
@@ -88,7 +85,6 @@ public class EntityRhinoceros extends Animal implements IAnimatedEntity {
     public static AttributeSupplier.Builder bakeAttributes() {
         return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 60.0D).add(Attributes.ATTACK_DAMAGE, 8.0D).add(Attributes.FOLLOW_RANGE, 32.0D).add(Attributes.MOVEMENT_SPEED, 0.25F).add(Attributes.ARMOR, 12.0D).add(Attributes.ARMOR_TOUGHNESS, 4.0D).add(Attributes.KNOCKBACK_RESISTANCE, 0.9D).add(Attributes.ATTACK_KNOCKBACK, 2.0D);
     }
-
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -126,7 +122,7 @@ public class EntityRhinoceros extends Animal implements IAnimatedEntity {
     }
 
     protected PathNavigation createNavigation(Level worldIn) {
-        return new GroundPathNavigatorWide(this, worldIn);
+        return new AdvancedPathNavigateNoTeleport(this, worldIn, true);
     }
 
     public boolean checkSpawnRules(LevelAccessor worldIn, MobSpawnType spawnReasonIn) {

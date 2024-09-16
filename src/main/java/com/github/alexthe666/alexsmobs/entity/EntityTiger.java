@@ -390,17 +390,23 @@ public class EntityTiger extends Animal implements ICustomCollisions, IAnimatedE
         if (this.isHolding()) {
             this.setSprinting(false);
             this.setRunning(false);
-            if (!this.level().isClientSide && this.getTarget() != null && this.getTarget().isAlive()) {
+            Entity target = this.getTarget();
+            if (!this.level().isClientSide && target != null && target.isAlive()) {
                 this.setXRot(0);
-                final float radius = 1.0F + this.getTarget().getBbWidth() * 0.5F;
+                final float radius = 1.0F + target.getBbWidth() * 0.5F;
                 final float angle = (Maths.STARTING_ANGLE * this.yBodyRot);
                 final double extraX = radius * Mth.sin(Mth.PI + angle);
                 final double extraZ = radius * Mth.cos(angle);
                 final double extraY = -0.5F;
-                Vec3 minus = new Vec3(this.getX() + extraX - this.getTarget().getX(), this.getY() + extraY - this.getTarget().getY(), this.getZ() + extraZ - this.getTarget().getZ());
-                this.getTarget().setDeltaMovement(minus);
+                Vec3 minus = new Vec3(this.getX() + extraX - target.getX(), this.getY() + extraY - target.getY(), this.getZ() + extraZ - target.getZ());
+                target.setDeltaMovement(minus);
+                target.hasImpulse = true;
                 if (holdTime % 20 == 0) {
-                    this.getTarget().hurt(this.damageSources().mobAttack(this), 5 + this.getRandom().nextInt(2));
+                    target.hurt(this.damageSources().mobAttack(this), 5 + this.getRandom().nextInt(2));
+                }
+                if(target.distanceTo(this) > 8.0F){
+                    this.setHolding(false);
+                    holdTime = 150;
                 }
             }
             holdTime++;

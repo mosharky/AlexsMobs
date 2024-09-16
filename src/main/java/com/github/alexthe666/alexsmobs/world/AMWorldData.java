@@ -35,6 +35,8 @@ public class AMWorldData extends SavedData {
     private ChunkPos pupfishChunk;
     private int pupfishChunkTime = 0;
     private int pupfishSeedAddition = 0;
+    private long startPupfishSearchTimestamp = -1;
+    private boolean noPupfishChunk;
     private static final Map<Level, AMWorldData> dataMap = new HashMap<>();
     private static final Predicate<BlockState> IS_WATER = (state -> state.is(Blocks.WATER));
 
@@ -74,6 +76,9 @@ public class AMWorldData extends SavedData {
         }
         if (nbt.contains("PupfishChunkX") && nbt.contains("PupfishChunkZ")) {
             data.pupfishChunk = new ChunkPos(nbt.getInt("PupfishChunkX"), nbt.getInt("PupfishChunkZ"));
+        }
+        if (nbt.contains("NoPupfishChunk")) {
+            data.noPupfishChunk = nbt.getBoolean("NoPupfishChunk");
         }
         return data;
     }
@@ -116,6 +121,9 @@ public class AMWorldData extends SavedData {
             compound.putInt("PupfishChunkX", this.pupfishChunk.x);
             compound.putInt("PupfishChunkZ", this.pupfishChunk.z);
         }
+        if(this.noPupfishChunk){
+            compound.putBoolean("NoPupfishChunk", noPupfishChunk);
+        }
         return compound;
     }
 
@@ -134,9 +142,18 @@ public class AMWorldData extends SavedData {
     }
 
     public void tickPupfish() {
-        if(AMConfig.restrictPupfishSpawns){
+        if(AMConfig.restrictPupfishSpawns && !noPupfishChunk){
+            if(pupfishChunk == null && startPupfishSearchTimestamp == -1){
+                startPupfishSearchTimestamp = System.currentTimeMillis();
+            }
             if (pupfishChunk == null && pupfishChunkTime % 10 == 0) {
-                searchForPupfishChunk();
+                long seconds = (System.currentTimeMillis() - startPupfishSearchTimestamp) / 1000L;
+                if(seconds / 60 > 5) {
+                    AlexsMobs.LOGGER.info("Giving up search for pupfish chunk after " + (seconds / 60) + " minutes. no pupfish will spawn in this world :( ");
+                    noPupfishChunk = true;
+                }else{
+                    searchForPupfishChunk();
+                }
             }
             pupfishChunkTime++;
         }

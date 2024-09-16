@@ -146,8 +146,8 @@ public class EntityShoebill extends Animal implements IAnimatedEntity, ITargetsD
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal(this, EntityAlligatorSnappingTurtle.class, 40, false, false, TARGET_BABY));
         this.targetSelector.addGoal(5, new NearestAttackableTargetGoal(this, Turtle.class, 40, false, false, TARGET_BABY));
         this.targetSelector.addGoal(6, new NearestAttackableTargetGoal(this, EntityCrocodile.class, 40, false, false, TARGET_BABY));
-        this.targetSelector.addGoal(7, new EntityAINearestTarget3D(this, EntityTerrapin.class, 100, false, true, null));
-
+        this.targetSelector.addGoal(7, new NearestAttackableTargetGoal(this, EntityCaiman.class, 40, false, false, TARGET_BABY));
+        this.targetSelector.addGoal(8, new EntityAINearestTarget3D(this, EntityTerrapin.class, 100, false, true, null));
     }
 
     public boolean isTargetBlocked(Vec3 target) {

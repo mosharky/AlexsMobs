@@ -94,7 +94,7 @@ public class EntityTusklin extends Animal implements IAnimatedEntity {
     }
 
     protected PathNavigation createNavigation(Level worldIn) {
-        return new GroundPathNavigatorWide(this, worldIn);
+        return new AdvancedPathNavigateNoTeleport(this, worldIn, true);
     }
 
     public boolean isInNether() {

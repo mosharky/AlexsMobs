@@ -8,6 +8,7 @@ import com.github.alexthe666.alexsmobs.tileentity.TileEntityLeafcutterAnthill;
 import com.github.alexthe666.citadel.animation.Animation;
 import com.github.alexthe666.citadel.animation.AnimationHandler;
 import com.github.alexthe666.citadel.animation.IAnimatedEntity;
+import com.github.alexthe666.citadel.server.entity.pathfinding.raycoms.AdvancedPathNavigate;
 import com.google.common.base.Predicates;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -119,7 +120,7 @@ public class EntityLeafcutterAnt extends Animal implements NeutralMob, IAnimated
     private void switchNavigator(boolean rightsideUp) {
         if (rightsideUp) {
             this.moveControl = new MoveControl(this);
-            this.navigation = new WallClimberNavigation(this, level());
+            this.navigation = new AdvancedPathNavigateNoTeleport(this, level(), AdvancedPathNavigate.MovementType.WALKING, true, false);
             this.isUpsideDownNavigator = false;
         } else {
             this.moveControl = new FlightMoveController(this, 0.6F, false);

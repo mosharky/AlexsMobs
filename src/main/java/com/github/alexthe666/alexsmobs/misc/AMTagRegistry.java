@@ -30,6 +30,7 @@ public class AMTagRegistry {
     public static final TagKey<EntityType<?>> KOMODO_DRAGON_TARGETS = registerEntityTag("komodo_dragon_targets");
     public static final TagKey<EntityType<?>> MANTIS_SHRIMP_TARGETS = registerEntityTag("mantis_shrimp_targets");
     public static final TagKey<EntityType<?>> VOID_PORTAL_IGNORES = registerEntityTag("void_portal_ignores");
+    public static final TagKey<EntityType<?>> CATFISH_IGNORE_EATING = registerEntityTag("catfish_ignore_eating");
 
     public static final TagKey<EntityType<?>> SKUNK_FEARS = registerEntityTag("skunk_fears");
     public static final TagKey<EntityType<?>> CAIMAN_TARGETS = registerEntityTag("caiman_targets");
